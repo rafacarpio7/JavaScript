@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>function aleatoriza(max) {
+        return Math.floor(Math.random() * max);
+        }
+    
+        let numeroUsuario = prompt('Introduce un numero entre el 0 y el 100');
+        let numeroAleatorio =  aleatoriza(100);
+    
+        while ((numeroUsuario!=numeroAleatorio) &&= (numeroUsuario==undefined)) {
+            
+            if (numeroUsuario>numeroAleatorio) {
+                alert('El numero introducido es mayor que el numero a buscar');
+                numeroUsuario = prompt('Prueba de nuevo');
+            } else {
+                alert('El numero introducido es menor que el numero a buscar');
+                numeroUsuario = prompt('Prueba de nuevo');
+            }
+        }
+    
+        alert('Enhorabuena el numero que estabamos buscando es el '+ numeroAleatorio)
+        </script>
+</body>
+</html>
