@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+
+        function esPalindroma(frase) {
+           
+            let fraseAux = frase.replace(/[\W_]/g,"");
+            let fraseReves = fraseAux.split("").reverse().join("");
+            if (fraseAux === fraseReves ) {
+                return 'Es palindromo'
+            } else {
+                return 'no es palindromo';
+            }
+        }
+
+
+        let holamundo= ' hola mundo me llamo rafa';
+        console.log(esPalindroma(holamundo));
+      
+
+    </script>
+</body>
+</html>

@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        class Television {
+            constructor(nombre,categoria,unidades,precio){
+                this.nombre=nombre;
+                this.categoria=categoria;
+                this.unidades=unidades;
+                this.precio=precio ;
+            }
+            importe(){
+                return this.unidades*this.precio;
+            }     
+        }
+        let tvSamsung= new Television("TV Samsung 42","Televisores",4,345.95);
+        console.log(tvSamsung);
+        console.log("El valor total es : "+tvSamsung.importe())
+        
+    </script>
+</body>
+</html>

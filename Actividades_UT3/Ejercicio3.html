@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        let meses = new Array("Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto","Septiembre","Octubre","Noviembre","Diciembre");
+        console.log(meses);
+        let mesesM = new Array();
+        for (let i = 0; i < meses.length; i++) {
+            if (meses[i].charAt(0)=="M" || meses[i].charAt(0)=="m") {
+                mesesM.push(meses[i]);
+            }
+        }
+        console.log(mesesM);
+        let primerMesM =meses.find(mes=> mes.toLowerCase().startsWith("m"));
+        console.log(primerMesM);
+
+        let posicionMesM = meses.findIndex(mes=> mes.toLowerCase().startsWith("m"));
+        console.log(posicionMesM);
+        let empiezaPorS = meses.some(mes=> mes.toLowerCase().startsWith("s"));
+        console.log(empiezaPorS);
+
+        let acabanPorO = meses.every(mes=> mes.toLowerCase().startsWith("o"));
+
+        let mesesMayuscula = meses.map(mes=> mes.toUpperCase());
+        console.log(mesesMayuscula);
+
+        console.log(meses.includes('Octubre'));
+
+        
+
+
+    </script>
+</body>
+</html>

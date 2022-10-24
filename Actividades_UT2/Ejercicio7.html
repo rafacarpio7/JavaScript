@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        function notaMedia1(arrayNotas) {
+            let suma = 0;
+            for (let index = 0; index < arrayNotas.length; index++) {
+                suma = suma + arrayNotas[index];
+                
+            }
+            let media = suma/(arrayNotas.length+1);
+
+            return parseFloat(media);
+        }
+
+        
+        let arrayNotasPrueba = [5,7,9,10,10,7,6];
+
+        
+        alert('Esta es la media1 : '+ notaMedia1(arrayNotasPrueba).toFixed(1));
+        
+
+    </script>
+</body>
+</html>
