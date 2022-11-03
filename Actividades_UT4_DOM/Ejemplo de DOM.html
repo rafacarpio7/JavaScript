@@ -68,6 +68,7 @@
     /* •	El formulario (ojo, no la colección con el formulario sino sólo el formulario) */
     console.log("El formulario (ojo, no la colección con el formulario sino sólo el formulario");
     console.log(document.querySelectorAll('form'));
+    
     console.log(document.getElementsByTagName('form'));
 
 
@@ -80,11 +81,30 @@
     /* •	Sólo los inputs con nombre ‘sexo’ */
     console.log("Sólo los inputs con nombre ‘sexo’");
     console.log(document.querySelectorAll("input[name='sexo']"));
-    console.log(document.getElementById("input[name='sexo']"));
+    let imputSexo =document.getElementsByTagName('input');
+    /*for (let index = 0; index < imputSexo.length; index++) {
+      if (imputSexo[index].getElementsByClassName('sexo')) {
+        console.log(imputSexo[index]);
+      } 
+      
+    }*/
+    console.log(imputSexo[4]);
+    console.log(imputSexo[3]);
+    
+
 
 
      /* •	Los items de lista de la clase ‘important’ (sólo los LI) */
      console.log("Los items de lista de la clase ‘important’ (sólo los LI)");
+     
+     let liImportant = document.getElementsByClassName('important');
+
+     for (let index = 0; index < liImportant.length; index++) {
+        if (liImportant[index].getElementsByTagName('li')) {
+          console.log(liImportant[index]);
+        }
+      
+     }
      console.log(document.getElementsByClassName('important'));
 
 
