@@ -50,28 +50,94 @@
 
   <script>
     /* •	El elemento con id ‘input2’ */
+    console.log("El elemento con id ‘input2’");
     console.log(document.getElementById('input2'));
+    console.log(document.querySelectorAll('#input2'));
 
     /* •  La colección de párrafos */
-    console.log(document.getElementsByClassName('p'));
+    console.log("La colección de párrafos");
+    console.log(document.getElementsByTagName('p'));
+    console.log(document.querySelectorAll('p'));
 
     /* •	Lo mismo, pero sólo de los párrafos que hay dentro del div ‘lipsum’ */
-    console.log(document.getElementById('lipsum').childNodes);
+    console.log("Lo mismo, pero sólo de los párrafos que hay dentro del div ‘lipsum’");
+    console.log(document.querySelectorAll('#lipsum p'));
+    console.log(document.getElementById('lipsum').getElementsByTagName('p'));
 
 
     /* •	El formulario (ojo, no la colección con el formulario sino sólo el formulario) */
-    console.log(document.getElementById('input2'));
+    console.log("El formulario (ojo, no la colección con el formulario sino sólo el formulario");
+    console.log(document.querySelectorAll('form'));
+    console.log(document.getElementsByTagName('form'));
 
 
     /* •	Todos los inputs */
-
+    console.log("Todos los inputs");
+    console.log(document.querySelectorAll('input'));
+    console.log(document.getElementsByTagName('input'));
 
 
     /* •	Sólo los inputs con nombre ‘sexo’ */
-
+    console.log("Sólo los inputs con nombre ‘sexo’");
+    console.log(document.querySelectorAll("input[name='sexo']"));
+    console.log(document.getElementById("input[name='sexo']"));
 
 
      /* •	Los items de lista de la clase ‘important’ (sólo los LI) */
+     console.log("Los items de lista de la clase ‘important’ (sólo los LI)");
+     console.log(document.getElementsByClassName('important'));
+
+
+     /* El primer párrafo que hay dentro del div 'lipsum' */
+     console.log("El primer párrafo que hay dentro del div 'lipsum'");
+     console.log(document.querySelectorAll('#lipsum p:nth-child(1)'));
+
+     /* El segundo párrafo de 'lipsum' */
+     console.log("El segundo párrafo de 'lipsum'");
+
+     console.log(document.querySelectorAll('#lipsum p:nth-child(2)'));
+
+     /* El último item de la lista */
+     console.log("El último item de la lista");
+
+     console.log(document.querySelectorAll('li:last-child'));
+
+     /* La label de 'Escoge sexo'. */
+     console.log("La label de 'Escoge sexo'.");
+     let coleccionEscogeSexo = document.getElementsByTagName('label');
+     let labelEScogeSexo = coleccionEscogeSexo[3];
+    console.log(labelEScogeSexo);
+
+    /* El innerHTML de la etiqueta de ‘Escoge sexo’ */
+    console.log("El innerHTML de la etiqueta de ‘Escoge sexo’");
+    coleccionEscogeSexo = document.getElementsByTagName('label');
+    labelEScogeSexo = coleccionEscogeSexo[3].innerHTML;
+    console.log(labelEScogeSexo);
+    
+     
+     /* El textContent de esa etiqueta */
+     console.log("El textContent de esa etiqueta");
+     console.log(document.querySelectorAll('label#text').textContent="Escoge el sexo:");
+
+     /* El valor del primer input de sexo */
+     console.log("El valor del primer input de sexo");
+
+      let primerInput = document.querySelector('input[name="sexo"]').value;
+      console.log(primerInput);
+
+     /* El valor del sexo que esté seleccionado (ayúdate de  Internet) */
+     console.log("El valor del sexo que esté seleccionado (ayúdate de  Internet)");
+     window.onclick = function(){
+      let number_input = document.querySelector('input[name="sexo"]:checked').value;
+     console.log(number_input);
+
+     }
+     
+
+      
+
+    
+
 
 
 
