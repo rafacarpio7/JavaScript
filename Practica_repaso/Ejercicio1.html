@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        function parOimpar(numero) {
+            if ((numero%2)==0) {
+                return true;
+            }else {
+                return false;
+            }
+        }
+
+        function esPrimo(numero) {
+            if (numero == 0 || numero==1 || numero==4) {
+                return false;
+                console.log('NO es PRIMO');
+            }
+            for (let i = 2; i < numero/2 ; i++){
+                if (numero % i == 0) {
+                    return false;
+                }else {
+                    return true
+                }
+            }
+        }
+
+        function multiplos(numero) {
+            let result = 0;
+            for (let i = 0; i <= 10; i++) {
+                result= numero*i;
+                console.log(result);
+            }
+        }
+        function multiplos2(numero) {
+            let result = 0;
+            for (let i = 0; i <= 10; i++) {
+                result= numero*i;
+                document.write('<br>'+result);
+            }
+        }
+
+        function divisores(numero) {
+            for (let i = 0; i < numero; i++) {
+                if ((numero%i)==0) {
+                    console.log(i);
+                }
+            }
+        }
+
+        function divisores2(numero) {
+            for (let i = 0; i < numero; i++) {
+                if ((numero%i)==0) {
+                    document.write('<br>'+i);
+                }
+            }
+        }
+        
+
+        let numeroUsuario = prompt('Inserta un numero mayor que 1');
+
+        while (isNaN(numeroUsuario) || undefined || numeroUsuario<=1) {
+            numeroUsuario = prompt('Inserta un numero mayor que 1');
+        }
+        console.log('El numero '+numeroUsuario+' es par o impar ?');
+        if (parOimpar(numeroUsuario)) {
+            console.log('Es PAR');
+        } else {
+            console.log('Es IMPAR');
+        }
+        
+        console.log('El numero '+ numeroUsuario+ ' es primo ?');
+        if (esPrimo(numeroUsuario)) {
+            console.log('Es PRIMO');
+        } else {
+            console.log('No es PRIMO');
+        }
+        
+        console.log('Los 10 primero multiplos de '+numeroUsuario+' son ');
+        multiplos(numeroUsuario);
+        console.log('Los divisores de '+ numeroUsuario + ' son ');
+        divisores(numeroUsuario);
+        console.log('El numero '+numeroUsuario+' pasado a binario es: '+Number(numeroUsuario).toString(2));
+        
+
+
+
+        document.write('El numero '+numeroUsuario+' es par o impar ?');
+        if (parOimpar(numeroUsuario)) {
+            document.write('Es PAR');
+        } else {
+            document.write(' Es IMPAR');
+        }
+        document.write('<br>');
+
+        document.write('El numero '+ numeroUsuario+ ' es primo ?');
+        if (esPrimo(numeroUsuario)) {
+            document.write(' Es PRIMO');
+        } else {
+            document.write(' NO es PRIMO');
+        }
+        document.write('<br>');
+        document.write('Los 10 primero multiplos de '+numeroUsuario+' son ');
+        multiplos2(numeroUsuario);
+        document.write('<br>');
+        document.write('Los divisores de '+ numeroUsuario + ' son ');
+        divisores2(numeroUsuario);
+        document.write('<br>');
+        document.write('El numero '+numeroUsuario+' pasado a binario es: ');
+        document.write(Number(numeroUsuario).toString(2));
+
+        alert('El numero '+ numeroUsuario+ ' es primo ?');
+        if (condition) {
+            
+        }
+
+        
+
+
+    </script>
+</body>
+</html>

@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simulacro</title>
+</head>
+<body>
+
+    <script>
+        let arrayNumeros = new Array();
+        let leeNumero = prompt("Introduce un numero");
+        while (leeNumero>= 0 || isNaN(leeNumero)) {
+            if (leeNumero>=0 && !isNaN(leeNumero)) {
+                
+                arrayNumeros.push(parseInt(leeNumero,10));
+            }
+            leeNumero = prompt("Introduce un numero por favor");
+            
+            while (isNaN(leeNumero)) {
+                leeNumero = prompt("Esperaba un numero");
+            }
+
+        }
+        let arrayOriginal = Array.from(arrayNumeros);
+        console.log("numeros introducidos en forma array");
+        console.log(arrayNumeros);
+        document.write("Numeros introducidos ");
+        for (const numero in arrayNumeros) {
+            document.write("<br>"+arrayNumeros[numero]);
+        }
+
+        console.log("Cada numero del array por orden de introduccion");
+        for (const numero in arrayNumeros) {
+           console.log(arrayNumeros[numero]);
+        }
+
+        document.write("<br>Numero total de numeros introducidos<br>"+ arrayNumeros.length+"<br>");
+        
+
+
+        console.log("Numero total de numeros introducidos");
+        console.log(arrayNumeros.length);
+
+        let suma= 0;
+        for (let i = 0; i < arrayNumeros.length; i++) {
+           suma+=arrayNumeros[i];
+        }
+        document.write("<br>Suma de todos los numeros introducidos<br> "+suma+"<br>");
+
+        console.log(" Suma de todos los numeros introducidos ");
+        console.log(suma);
+        let sumaArray = arrayNumeros.reduce((total,numero) => total += numero);
+        console.log(sumaArray);
+
+
+        function media(array) {
+            let suma = 0;
+            for (let index = 0; index < array.length; index++) {
+                suma += array[index];
+                
+            }
+            let media = suma/(array.length+1);
+
+            return parseFloat(media);
+        }
+        document.write("<br>Media de los numeros introducidos<br>"+media(arrayNumeros)+"<br>");
+
+        console.log("Media de los numeros introducidos");
+        console.log(media(arrayNumeros));
+
+        let ordenacionMayor = arrayNumeros.sort((a,b)=> a > b ? -1 : 1);
+        document.write("<br>Ordenacion de mayor a menor<br>");
+        for (const numero in ordenacionMayor) {
+            document.write("<br>"+ordenacionMayor[numero]);
+        }
+
+        
+        console.log("Ordenacion de mayor a menor");
+        console.log(arrayNumeros.sort((a,b)=> a > b ? -1 : 1));
+        
+        
+
+
+        console.log("Ordenacion de menor a mayor");
+        arrayNumeros.sort((a, b) => {
+        if(a == b) {
+            return 0; 
+        }
+        if(a < b) {
+            return -1;
+        }
+        return 1;
+        });
+        console.log(arrayNumeros);
+        document.write("<br>Ordenacion de menor a mayor<br>");
+        for (const numero in arrayNumeros) {
+            document.write("<br>"+arrayNumeros[numero]);
+        }
+
+        function mediana(array) {
+                let suma=0;
+                let mediana = 0;
+                if ((array.length%2)==0) {
+                    suma = array[array.length/2]+ array[((array.length/2)-1)]
+                    mediana = suma/2;
+                }else {
+                    mediana = array[((array.length-1)/2)];
+                }
+                return mediana;
+        }
+        document.write("<br>La mediana de nuestro array es : "+mediana(arrayNumeros)+ "<br>");
+
+
+        console.log("La mediana de nuestro array es : ");
+        console.log(mediana(arrayNumeros));
+
+        let mayorSupuesto = arrayNumeros[0];
+        for (let i = 0; i < arrayNumeros.length; i++) {
+            if (mayorSupuesto<arrayNumeros[i]) {
+                mayorSupuesto = arrayNumeros[i]; 
+            }
+        }
+        document.write("<br>El valor mas alto del array es : "+mayorSupuesto);
+        console.log("El valor mas alto del array es : "+ mayorSupuesto);
+        let menorSupuesto = arrayNumeros[0];
+        for (let i = 0; i < arrayNumeros.length; i++) {
+            if (menorSupuesto>arrayNumeros[i]) {
+                menorSupuesto = arrayNumeros[i]; 
+            }
+        }
+        document.write("<br>El valor mas bajo del array es : "+menorSupuesto+ "<br>");
+        console.log("El valor mas bajo del array es : "+ menorSupuesto+ "<br>");
+
+        function numerosIntermedios(limiteSuperior,limiteInferior,array) {
+            let arrayAux = new Array();
+            if (array.indexOf(limiteInferior)>array.indexOf(limiteSuperior)) {
+                for (let i = array.indexOf(limiteSuperior); i <= array.indexOf(limiteInferior); i++){
+                arrayAux.push(array[i]);
+            }
+            }else{
+                for (let i = array.indexOf(limiteInferior); i <= array.indexOf(limiteSuperior); i++){
+                arrayAux.push(array[i]);
+            }
+            }
+
+            
+            return arrayAux;
+        }
+
+        console.log("Los números enteros comprendidos entre el menor y el mayor de los números introducidos.");
+        console.log(arrayOriginal);
+        console.log(numerosIntermedios(mayorSupuesto,menorSupuesto,arrayOriginal));
+
+        document.write("<br>Los números enteros comprendidos entre el menor y el mayor de los números introducidos<br>");
+        for (const numero in numerosIntermedios(mayorSupuesto,menorSupuesto,arrayOriginal)) {
+            document.write("<br>"+numerosIntermedios(mayorSupuesto,menorSupuesto,arrayOriginal)[numero]);
+        }
+
+
+    </script>
+    
+</body>
+</html>
