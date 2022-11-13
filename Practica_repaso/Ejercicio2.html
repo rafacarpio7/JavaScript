@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        /*
+         Pedir dos números al usuario y calcular/mostrar:
+
+            a.     El resultado de sumar, restar, multiplicar y dividir esos dos números.
+
+            b.     La media de los dos números.
+
+            c.     Los números pares comprendidos entre los dos números introducidos.
+
+            
+
+            Nota 1: El usuario puede introducir cualquier número (entero o decimal).
+
+            Nota 2: Si el usuario introduce algo distinto a un número, le indicaremos lo que estamos esperando.
+
+            Nota 3: Refactoriza el código para encapsularlo en funciones reutilizables. Cuantas más funciones hagas que tengan su lógica mejor.
+
+        */
+
+        let leeNumero = prompt("Introduce un numero");
+        let arrayNumeros = new Array();
+        while (leeNumero>= 0 || isNaN(leeNumero)) {
+            if (leeNumero>=0 && !isNaN(leeNumero)) {
+                
+                arrayNumeros.push(parseFloat(leeNumero));
+            }
+            leeNumero = prompt("Introduce un numero por favor");
+            
+            while (isNaN(leeNumero)) {
+                leeNumero = prompt("Esperaba un numero");
+            }
+
+        }
+
+        function suma(array) {
+            let suma ;
+            for (let i = 0; i < array.length; i++) {
+                suma +=array[i];
+            }
+            return suma;
+        }
+
+        function resta(array) {
+            let resta ;
+            for (let i = 0; i < array.length; i++) {
+                resta -=array[i];
+            }
+            return resta;
+        }
+
+        function multiplica(array) {
+            let multiplica;
+            for (let i = 0; i < array.length; i++) {
+                multiplica *=array[i];
+            }
+            return multiplica;
+        }
+
+        function divide(array) {
+            let divide;
+            for (let i = 0; i < array.length; i++) {
+                divide /=array[i];
+            }
+            return divide;
+        }
+
+        function media(array) {
+            return suma(array)/array.length;
+        }
+
+
+        function pares(array) {
+            let ordenacionMayor = array.sort((a,b)=> a > b ? -1 : 1);
+            let arrayPares = new Array();
+            if (ordenacionMayor[0]%2==0) {
+                for (let i = ordenacionMayor[0]; i < ordenacionMayor[-1]; i+2) {
+                    arrayPares.push(i);
+
+                }
+            } else {
+                
+            }
+            return arrayPares;
+        }
+
+        console.log(pares(arrayNumeros));
+
+
+    </script>
+</body>
+</html>
