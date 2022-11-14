@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Examen</title>
+</head>
+<body>
+    <script>
+        class Dado{
+            constructor(numeroCaras,tipoDado,valorCaras,valorActivo){
+                this.numeroCaras=numeroCaras;
+                this.tipoDado=tipoDado;
+                this.valorCaras=0;
+                this.valorActivo=valorActivo;
+            }
+
+            getValorCaras(){
+                let arrayValoresCaras = new Array(this.numeroCaras);
+                let cont=1;
+                for (let i = 0; i < this.numeroCaras; i++) {
+                    arrayValoresCaras.push(cont++);
+                }
+                this.valorCaras=arrayValoresCaras;
+                return this.valorCaras;
+            }
+
+            getLanzarDado(){
+                let min = Math.ceil(1);
+                let max = Math.floor(this.numeroCaras);
+                return Math.floor(Math.random() * (max - min + 1) + min);
+            }
+
+            getValorActivo(){
+                this.valorActivo=this.getLanzarDado();
+                return this.valorActivo;
+            }
+
+            getInfo(){
+                return "Numero de Caras: "+this.numeroCaras + "<br>" +
+                " Tipo Dado: "+ this.tipoDado +"<br>" +
+                " Valor Caras : "+this.getValorCaras() + "<br>" +
+                " Valor Activo: "+this.getValorActivo()+ "<br>";
+            }
+        }
+
+        let dado1= new Dado(6,"numerico",0);
+        let dado2= new Dado(6,"numerico",6,0);
+
+        dado1.getLanzarDado();
+        dado2.getLanzarDado();
+        document.write("<br>");
+        document.write(dado1.getInfo());
+        document.write("<br>");
+        document.write(dado2.getInfo());
+        document.write("<br>");
+
+
+        let lanzamientos = 20;
+
+        function lanzarDados(numeroVeces) {
+            let arraySumaLanzamientos = new Array();
+            for (let i = 0; i < numeroVeces; i++) {
+                arraySumaLanzamientos.push(dado1.getLanzarDado()+dado2.getLanzarDado());
+            }
+            return arraySumaLanzamientos;
+        }
+
+        document.write("<br>Se han realizado : "+ lanzamientos + " lanzamientos<br> ");
+        
+        let arrayLanzado = lanzarDados(lanzamientos);
+        let copiaArray = new Array();
+        for (let i = 0; i < arrayLanzado.length; i++) {
+            copiaArray[i]= arrayLanzado[i];
+            
+        }
+
+        document.write(arrayLanzado);
+        document.write("<br>");
+        copiaArray.shift();
+        copiaArray.pop();
+        document.write("<br>Eliminados primera y ultima posicion de los lanzamientos : <br>"+copiaArray);
+        document.write("<br>");
+
+        function conjuntoMenor7(array) {
+            let arrayConjunto = new Array();
+            for (let i = 0; i < array.length; i++) {
+                if (array[i]<=7) {
+                    arrayConjunto.push(array[i]);
+                }
+                
+            }
+            return arrayConjunto;
+        }
+
+
+        document.write("<br>El conjunto de solo los numeros menores de 7 es :<br> "+ conjuntoMenor7(arrayLanzado));
+        document.write("<br>");
+
+        function tripleValor(array) {
+            let arrayTriple = new Array();
+            for (let i = 0; i < array.length; i++) {
+                arrayTriple[i]=array[i]*3;
+                
+            }
+            return arrayTriple;
+        }
+
+
+        document.write("<br> El valor del array con valores triples es :<br> " + tripleValor(arrayLanzado));
+        document.write("<br>");
+
+        document.write("<br> Conjunto ordenado de menor a mayor : <br> " +arrayLanzado.sort((a,b)=> a > b ? -1 : 1));
+        document.write("<br>");
+        document.write("<br> Conjunto ordenado de mayor a menor : <br> " +arrayLanzado.sort((a,b)=> a > b ? 1 : -1));
+        document.write("<br>");
+        function suma(array) {
+            let suma;
+            for (let i = 0; i < array.length; i++) {
+                suma+=array[i];
+            }
+            return suma;
+        }
+
+        function media(array) {
+            let suma=0;
+            for (let i = 0; i < array.length; i++) {
+                suma+=array[i];
+            }
+            
+            return suma/array.length;
+        }
+
+        document.write("<br> La media del conjunto de valores es : <br> "+ media(arrayLanzado));
+
+        function mediana(array) {
+                let suma=0;
+                let mediana = 0;
+                if ((array.length%2)==0) {
+                    suma = array[array.length/2]+ array[((array.length/2)-1)]
+                    mediana = suma/2;
+                }else {
+                    mediana = array[((array.length-1)/2)];
+                }
+                return mediana;
+        }
+
+        document.write("<br> La mediana del conjunto de valores es : <br> "+ mediana(arrayLanzado));
+
+        function indiceMayor(array){
+            let indMayor=0;
+            let numMayor=array[0];
+            for (num in array){
+                if (array[num]>numMayor) {
+                    numMayor=array[num];
+                    indMayor=num;
+                }
+            }
+            return indMayor;
+        }
+
+        function frecuencia(numero, array){
+            let veces=0
+            for (num in array) {
+                if (array[num]==numero) {
+                    veces++;
+                }
+            }
+            return veces;
+        }
+       
+        
+        function moda(array){
+            let frecuencias=new Array(array.length)
+            for (num in array){
+                var numero=array[num]
+                frecuencias[num]=frecuencia(numero, array)
+            }
+            let indiceModa=indiceMayor(frecuencias);
+            return array[indiceModa];
+
+        }
+
+        document.write("<br> La moda del conjunto de valores es : <br> "+moda(arrayLanzado));
+
+        function porcentaje(array,numero,numeroLanzamientos) {
+            let veces = 0;
+            for (let i = 0; i < array.length; i++) {
+                if (array[i]==numero) {
+                    veces++;
+                }
+                
+            }
+            return (veces/numeroLanzamientos)*100;
+        }
+
+        document.write("<br> Porcentaje de lanzamientos cuya suma ha sido 2 : <br>"+ porcentaje(arrayLanzado,2,lanzamientos)+ "%");
+        document.write("<br> Porcentaje de lanzamientos cuya suma ha sido 3 : <br>"+ porcentaje(arrayLanzado,3,lanzamientos)+ "%");
+        document.write("<br> Porcentaje de lanzamientos cuya suma ha sido 4 : <br>"+ porcentaje(arrayLanzado,4,lanzamientos)+ "%");
+        document.write("<br> Porcentaje de lanzamientos cuya suma ha sido 5 : <br>"+ porcentaje(arrayLanzado,5,lanzamientos)+ "%");
+        document.write("<br> Porcentaje de lanzamientos cuya suma ha sido 6 : <br>"+ porcentaje(arrayLanzado,6,lanzamientos)+ "%");
+        document.write("<br> Porcentaje de lanzamientos cuya suma ha sido 7 : <br>"+ porcentaje(arrayLanzado,7,lanzamientos)+ "%");
+        document.write("<br> Porcentaje de lanzamientos cuya suma ha sido 8 : <br>"+ porcentaje(arrayLanzado,8,lanzamientos)+ "%");
+        document.write("<br> Porcentaje de lanzamientos cuya suma ha sido 9 : <br>"+ porcentaje(arrayLanzado,9,lanzamientos)+ "%");
+        document.write("<br> Porcentaje de lanzamientos cuya suma ha sido 10 : <br>"+ porcentaje(arrayLanzado,10,lanzamientos)+ "%");
+        document.write("<br> Porcentaje de lanzamientos cuya suma ha sido 11 : <br>"+ porcentaje(arrayLanzado,11,lanzamientos)+ "%");
+        document.write("<br> Porcentaje de lanzamientos cuya suma ha sido 12 : <br>"+ porcentaje(arrayLanzado,12,lanzamientos)+ "%");
+        
+        function porcentajeMenor7(array,numeroLanzamientos) {
+            let suma = 0;
+            for (let i = 0; i < array.length; i++) {
+                if (array[i]<7) {
+                    suma++;
+                }
+                
+            }
+            return (suma/numeroLanzamientos)*100;
+
+        }
+
+        document.write("<br> Porcentaje de lanzamientos cuya suma hay sido menor que 7: <br> "+porcentajeMenor7(arrayLanzado,lanzamientos));
+
+        function porcentajeMayor7(array,numeroLanzamientos) {
+            let suma = 0;
+            for (let i = 0; i < array.length; i++) {
+                if (array[i]>7) {
+                    suma++;
+                }
+                
+            }
+            return (suma/numeroLanzamientos)*100;
+
+        }
+
+        document.write("<br> Porcentaje de lanzamientos cuya suma hay sido mayor que 7: <br> "+porcentajeMayor7(arrayLanzado,lanzamientos));
+
+        function probabilidad(numDados,numCaras) {
+            let minValor = numDados;
+            let maxValor = numCaras*numDados;
+            let arrayProbabilidad = new Array();
+            for (let i = minValor; i <= maxValor; i++){
+                arrayProbabilidad.push(i);
+               
+            }
+            return arrayProbabilidad;
+
+        }
+        document.write("<br>");
+        document.write("Funcion que devuelve conjunto array posibles casos : "+ probabilidad(3,3));
+
+
+
+    </script>
+</body>
+</html>

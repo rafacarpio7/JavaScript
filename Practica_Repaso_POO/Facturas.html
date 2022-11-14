@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prueba facturas</title>
+</head>
+<body>
+    <script>
+        class InformacionEmpresa{
+            
+            constructor(nombreEmpresa,CIF,direccion,telefono){
+                this.nombreEmpresa=nombreEmpresa;
+                this.CIF=CIF;
+                this.direccion=direccion;
+                this.telefono=telefono;
+            }
+
+        }
+
+        class FacturaSimplificada extends InformacionEmpresa{
+            constructor(nombreEmpresa,CIF,direccion,telefono,fechaFacturacion,idFactura,
+                        descripcionVenta,importeConIVA,importeSinIVA,importeIVA){
+                super(nombreEmpresa,CIF,direccion,telefono);
+                this.fechaFacturacion=fechaFacturacion;
+                this.idFactura=idFactura;
+                this.descripcionVenta=descripcionVenta;
+                this.importeConIVA=importeConIVA;
+                this.importeSinIVA=importeSinIVA;
+                this.importeIVA=importeIVA;
+            }
+
+            importe(){
+                return this.importeConIVA;
+            }
+
+            getInfo(){
+                return "Nombre Empresa: "+this.nombreEmpresa + "\n"+
+                " CIF : "+ this.CIF +"\n"+
+                " Direccion : "+this.direccion + "\n"+
+                " Telefono : "+this.telefono + "\n"+
+                " Fecha de facturacion: "+this.fechaFacturacion +"\n"+
+                " ID Factura: "+this.idFactura +"\n"+
+                " Descripcion Venta: "+this.descripcionVenta +"\n"+
+                " Importe con IVA : "+this.importeConIVA +"\n"+
+                " Importe sin IVA: "+this.importeSinIVA +"\n"+
+                " Importe del IVA: "+this.importeIVA+"\n";
+
+            }
+
+            
+
+        }
+
+        class FacturaCompleta extends FacturaSimplificada{
+            constructor(nombreEmpresa,CIF,direccion,telefono,fechaFacturacion,idFactura,
+                descripcionVenta,importeConIVA,importeSinIVA,importeIVA,
+                nombreCli,clienteDNI,direccionCliente,telefonoCliente,emailCliente){
+                    super(nombreEmpresa,CIF,direccion,telefono,fechaFacturacion,idFactura,
+                        descripcionVenta,importeConIVA,importeSinIVA,importeIVA);
+                        this.nombreCli=nombreCli;
+                        this.clienteDNI=clienteDNI;
+                        this.direccionCliente=direccionCliente;
+                        this.telefonoCliente=telefonoCliente;
+                        this.emailCliente=emailCliente;
+            }
+
+            getInfo(){
+                return super.getInfo() +
+                " Nombre Cliente : "+this.nombreCli + "\n"+
+                " DNI Cliente : "+this.clienteDNI + "\n"+
+                " Direccion Cliente: "+this.direccionCliente +"\n"+
+                " Telefono Cliente: "+this.telefonoCliente +"\n"+
+                " Email Cliente: "+this.emailCliente+"\n" ;
+
+            }
+        }
+        let Factura1 = new FacturaSimplificada("FABRI SA",7896215,"avenida de la victoria",618963154,"17/06/2022",125,
+                "reloj de pulsera",120,100,0.20);
+        let Factura2 = new FacturaSimplificada("IKER SA",7697255,"avenida miraflores",619866709,"17/06/2021",360,
+        "iphone",150,120,0.20);       
+        console.log(Factura1.getInfo());
+        console.log(Factura2.getInfo());
+
+        let FacturaCompletaRafa = new FacturaCompleta("IKER SA",7697255,"avenida miraflores",619866709,"17/06/2021",360,
+        "iphone",150,120,0.20,"Ivan","485632157R","calle francisco de quevedo",615875362,"ivaneitor@gmail.com");
+        console.log(FacturaCompletaRafa.getInfo());
+
+
+        //herencia en varios niveles es como podriamos hacer una herencia multiple o utilizando interfaces y clases abstractas
+
+    </script>
+
+</body>
+</html>

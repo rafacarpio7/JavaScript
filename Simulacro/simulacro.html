@@ -10,11 +10,13 @@
 
     <script>
         let arrayNumeros = new Array();
+
         let leeNumero = prompt("Introduce un numero");
         while (leeNumero>= 0 || isNaN(leeNumero)) {
             if (leeNumero>=0 && !isNaN(leeNumero)) {
                 
                 arrayNumeros.push(parseInt(leeNumero,10));
+                //number
             }
             leeNumero = prompt("Introduce un numero por favor");
             
@@ -26,12 +28,14 @@
         let arrayOriginal = Array.from(arrayNumeros);
         console.log("numeros introducidos en forma array");
         console.log(arrayNumeros);
+
         document.write("Numeros introducidos ");
         for (const numero in arrayNumeros) {
             document.write("<br>"+arrayNumeros[numero]);
         }
 
         console.log("Cada numero del array por orden de introduccion");
+
         for (const numero in arrayNumeros) {
            console.log(arrayNumeros[numero]);
         }
@@ -51,6 +55,7 @@
 
         console.log(" Suma de todos los numeros introducidos ");
         console.log(suma);
+        
         let sumaArray = arrayNumeros.reduce((total,numero) => total += numero);
         console.log(sumaArray);
 
