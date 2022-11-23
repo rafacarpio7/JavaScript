@@ -59,24 +59,25 @@
     
     let miLimsum=document.getElementById('lipsum');
     console.log(miLimsum);
+
     let ultimoParrafo=document.createElement('p');
-    let miP= document.getElementsByTagName('p');
-    console.log(miP);
-   
-    let ultimoParrafoTexto=document.createTextNode('Nuevo párrafo');
-    ultimoParrafo.appendChild(ultimoParrafoTexto);
-    console.log(ultimoParrafo);
-    //miP.appendChild(ultimoParrafo);
-    let nuevaNegrita=document.createElement('strong');
-    nuevaNegritaTexto=document.createTextNode(' añadido ');
-    nuevaNegrita.appendChild(nuevaNegritaTexto);
-    console.log(nuevaNegrita);
-    ultimoParrafo.appendChild(nuevaNegrita);
-    console.log(ultimoParrafo);
-    let textoFinal= document.createTextNode('por javascript');
-    ultimoParrafo.appendChild(textoFinal);
-    console.log(ultimoParrafo);
-    miP.appendChild(ultimoParrafo);
+    ultimoParrafo.innerHTML="Nuevo párrafo <b>añadido</b> por javascript";
+
+    miLimsum.appendChild(ultimoParrafo);
+
+    console.log(miLimsum.children);
+
+    miLimsum.children.item(1).insertAdjacentHTML("beforebegin", "<p>Este es el nuevo segundo párrafo</p>");
+
+    
+    let formulario = document.getElementsByTagName('form')[0];
+    formulario.children.item(1).insertAdjacentHTML("beforebegin",'<label for="input1bis"> Dato 1 bis</label><input id="input1bis" type="text" value="Rafael Torralba"><br>');
+    
+    //Por si quieres otra mas optima console.log(formulario.querySelectorAll('label').item(formulario.querySelectorAll('label').length-1).insertAdjacentHTML("afterend",'<input type="radio" name="sexo" value="O">OTRO'));
+    //Esta es la menos optima console.log(formulario.children.item(6).insertAdjacentHTML("afterend",'<input type="radio" name="sexo" value="O">OTRO'));
+    
+
+
 
     
   </script>
