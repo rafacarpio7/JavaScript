@@ -3,10 +3,10 @@
 <html lang="es"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Ejemplo de DOM</title>
+  <title>Ejemplo de DOM3</title>
 </head>
 <body>
-  <h1 class="important">Ejemplo de DOM</h1>
+  <h1 class="important">Ejemplo de DOM3</h1>
   <p>Vamos a ver una página de ejemplo para poder "jugar" con el DOM</p>
   <h2>Algunos párrafos</h2>
   <div id="lipsum">
@@ -27,7 +27,7 @@
       <li class="important">Nullam vitae risus rutrum quam dapibus viverra.</li>
       </ul>
   <h2>Un formulario</h2>
-  <form action="https://cipfpbatoi.github.io/materials/daw/dwc/01-js/ejercicios/ejemplos/ejemploDOM.html#">
+  <form>
     <label for="input1">Dato 1
       <input id="input1" type="text" size="20"><br>
     </label>
@@ -47,40 +47,38 @@
   <input type="button" id="button2" value="Button 2">
 </p>
   </form>
+  <h2>Un área para texto</h2>
+  <textarea id="texto"></textarea>
+  <h2>Imágenes</h2>
+  <div id="image">
+  <img src="https://concepto.de/wp-content/uploads/2018/10/URL3-e1538665010929.jpg">
+  </div>
+
+  <button id="cambiarTextos">Cambiar texto de párrafos.</button>
+  <button id="cambiarClases">Cambiar clases de párrafos.</button>
+  <button id="quitarClases">Quitar clases de todos los párrafos.</button>
+  <button id="crearParrafo">Crear párrafo.</button>
+  <button id="borrarUltimo">Borrar último.</button>
+  <button id="borrarPrimero">Borrar primero.</button>
+  <button id="sustituirTextoPrimerParrafo">Sustituir texto de primer párrafo.</button>
+  <button id="crearImagen">Crear imagen.</button>
 
   <script>
-    /*Añade a la página:
+    function cambiarTextos() {
+      let coleccionP= document.getElementsByTagName('p');
+      for (let i = 0; i < coleccionP.length; i++) {
+        //console.log(coleccionP);
+        coleccionP[i].innerText="Párrafo "+(i+1)+ " cambiado";
+        //console.log(coleccionP[i].innerText.innerText);
+      }
+    }
+    //console.log(document.getElementsByTagName('p')[1]);
+    function cambiarClases(params) {
+      
+    }
 
-    -Un nuevo párrafo al final del DIV ‘lipsum’ con el texto “Nuevo párrafo añadido por javascript” 
-    (fíjate que una palabra está en negrita)
-    -Un nuevo párrafo que sea el 2º del DIV con el texto “Este es el nuevo segundo párrafo”
-    -Un nuevo elemento al formulario tras el ‘Dato 1’ con la etiqueta ‘Dato 1 bis’ y el INPUT con id ‘input1bis’ que al cargar la página tendrá escrito tu nombre (“Mi nombre”)
-    -Una nueva opción para escoger el sexo que sea “Otro”.*/
-    
-    let miLimsum=document.getElementById('lipsum');
-    console.log(miLimsum);
-
-    let ultimoParrafo=document.createElement('p');
-    ultimoParrafo.innerHTML="Nuevo párrafo <b>añadido</b> por javascript";
-
-    miLimsum.appendChild(ultimoParrafo);
-
-    console.log(miLimsum.children);
-
-    miLimsum.children.item(1).insertAdjacentHTML("beforebegin", "<p>Este es el nuevo segundo párrafo</p>");
-
-    
-    let formulario = document.getElementsByTagName('form')[0];
-
-    console.log(formulario.children.item(1));
-    formulario.children.item(1).insertAdjacentHTML("beforebegin",'<label for="input1bis"> Dato 1 bis</label><input id="input1bis" type="text" value="Rafael Torralba"><br>');
-
-    console.log(formulario.querySelectorAll('label').item(formulario.querySelectorAll('label').length-1).insertAdjacentHTML("afterend",'<input type="radio" name="sexo" value="O">OTRO'));
-
-    //Por si quieres otra mas optima console.log(formulario.querySelectorAll('label').item(formulario.querySelectorAll('label').length-1).insertAdjacentHTML("afterend",'<input type="radio" name="sexo" value="O">OTRO'));
-    console.log(formulario.children.item(6).insertAdjacentHTML("afterend",'<input type="radio" name="sexo" value="O">OTRO'));
-
-
+    document.getElementById("cambiarTextos").addEventListener("click",cambiarTextos);
     
   </script>
+  
 </body></html>
