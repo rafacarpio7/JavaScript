@@ -73,11 +73,65 @@
       }
     }
     //console.log(document.getElementsByTagName('p')[1]);
-    function cambiarClases(params) {
+    function cambiarClases() {
+      let coleccionP= document.getElementsByTagName('p');
+      for (let index = 0; index < coleccionP.length; index++) {
+        coleccionP[index].setAttribute("class","miClase");
+        
+      }
+    }
+
+    function quitarClases() {
+      let coleccionP= document.getElementsByTagName('p');
+      for (let index = 0; index < coleccionP.length; index++) {
+        coleccionP[index].removeAttribute("class");
+        
+      }
       
     }
 
+    function crearParrafo() {
+      document.getElementsByTagName("p").item(document.getElementsByTagName("p").length-1).insertAdjacentText("beforebegin",document.getElementById("texto").innerText);
+    }
+
+    function borrarUltimo() {
+      document.getElementsByTagName("p").item(document.getElementsByTagName("p").length-1).remove();
+    }
+
+    function borrarPrimero() {
+      document.getElementsByTagName("p").item(0).remove();
+    }
+
+    function sustituirTextoPrimerParrafo() {
+      let nuevoP = document.createElement("p");
+      let textoP = document.createTextNode("Rafael Torralba Redondo");
+      nuevoP.appendChild(textoP);
+      let parrafo = document.getElementsByTagName("p").item(0)
+      let padre = parrafo.parentNode;
+      padre.replaceChild(nuevoP,parrafo);
+    }
+
+    function crearImagen() {
+      let imagen = document.getElementById("image");
+      let ruta = prompt("Introduzca la ruta de la imagen a cargar");
+      let textoAlternativo = prompt("Texto alternativo");
+
+      let nuevaImagen = document.createElement("img");
+      nuevaImagen.setAttribute("src",ruta);
+      nuevaImagen.setAttribute("alt",textoAlternativo);
+      imagen.append(nuevaImagen);
+    }
+
     document.getElementById("cambiarTextos").addEventListener("click",cambiarTextos);
+    document.getElementById("cambiarClases").addEventListener("click",cambiarClases);
+    document.getElementById("quitarClases").addEventListener("click",quitarClases);
+    document.getElementById("crearParrafo").addEventListener("click",crearParrafo);
+    document.getElementById("borrarUltimo").addEventListener("click",borrarUltimo);
+    document.getElementById("borrarPrimero").addEventListener("click",borrarPrimero);
+    document.getElementById("sustituirTextoPrimerParrafo").addEventListener("click",sustituirTextoPrimerParrafo);
+    document.getElementById("crearImagen").addEventListener("click",crearImagen);
+
+
     
   </script>
   
