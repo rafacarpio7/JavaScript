@@ -91,7 +91,8 @@
     }
 
     function crearParrafo() {
-      document.getElementsByTagName("p").item(document.getElementsByTagName("p").length-1).insertAdjacentText("beforebegin",document.getElementById("texto").innerText);
+      document.getElementsByTagName("p").item(document.getElementsByTagName("p").length-1).insertAdjacentHTML("afterend","<p>"+document.getElementById("texto").value+"</p>");
+      
     }
 
     function borrarUltimo() {
