@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <button id="abreVentana">Abrir Ventana</button>
+    <button id="escribeVentana">Escribe en la nueva ventana</button>
+    <button id="mueveVentana">Mueve ventana</button>
+    <button id="cierraVentana">Cierra Ventana</button>
+
+    <script>
+        let nuevaVentana;
+        setTimeout(() => alert('Bienvenido'), 2000);
+        function abreVentana() {
+            nuevaVentana=window.open("nuevaVentana.html", "Diseño Web", "width=500, height=200");
+            
+            
+        }
+
+        function escribeVentana() {
+            nuevaVentana.document.write("<h1>hola</h1>");
+            
+        }
+
+        function mueveVentana() {
+            nuevaVentana.moveBy(-100,300);
+        }
+        
+        function cierraVentana() {
+            nuevaVentana.close();
+        }
+
+        
+        
+        document.getElementById("abreVentana").addEventListener("click",abreVentana);
+        document.getElementById("escribeVentana").addEventListener("click",escribeVentana);
+        document.getElementById("mueveVentana").addEventListener("click",mueveVentana);
+        document.getElementById("cierraVentana").addEventListener("click",cierraVentana);
+
+    </script>
+</body>
+</html>
