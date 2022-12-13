@@ -1,0 +1,89 @@
+<img src="formulario.jpg">
+<h1>Formulario</h1>
+<p><b>Completa el siguiente formulario</b></p>
+<form><!-- action="ejemplo.php" method="get">-->
+  <p>Nombre: <input type="text" name="nombre" size="40"></p>
+  <p>Apellidos:
+  <input type="text" name="apellidos" size="40" placeholder="Escriba sus dos apellidos">
+  </p>
+  <p>A�o de nacimiento: <input type="number" name="nacido" min="1900"></p>
+  <p>Nacionalidad: 
+  <SELECT NAME="lista1">
+  <OPTION>
+  <OPTION>Espa�ola
+  <OPTION>Alemana
+  <OPTION>Francesa
+  </SELECT>
+  </p>
+  <p>Sexo:
+    <input type="radio" name="hm" value="h"> Hombre
+    <input type="radio" name="hm" value="m"> Mujer
+  </p>
+  <p>Deportes favoritos:
+  <input type="checkbox" name="casilla1">futbol
+  <input type="checkbox" name="casilla2">baloncesto
+  <input type="checkbox" name="casilla3">atletismo
+  </p>
+  <p>Comentarios:
+  <textarea id="texto"></textarea>
+  </p>
+  <p>
+    <!--<input type="submit" id="button1" value="Enviar">
+     <input type="reset" id="button2" value="Borrar">
+    -->
+    <input type="button" id="button1" value="Enviar">
+    <input type="button" id="button2" value="Borrar">
+    <input type="button" id="button3" value="Click me">
+  </p>
+
+  <script>
+
+    //FUNCIONES EJERCICIO 1
+
+    function aumentaImagen(params) {
+      document.getElementsByTagName('img').item(0).setAttribute('width','60px');
+      document.getElementsByTagName('img').item(0).setAttribute('heigth','60px');
+    }
+
+    function disminuyeImagen(params) {
+      document.getElementsByTagName('img').item(0).removeAttribute('width');
+      document.getElementsByTagName('img').item(0).removeAttribute('heigth');
+    }
+
+    // EJERCICIO 1
+
+    document.getElementsByTagName('img').item(0).addEventListener('mouseover',aumentaImagen);
+    document.getElementsByTagName('img').item(0).addEventListener('mouseout',disminuyeImagen);
+
+    // FUNCIONES EJERCICIO 2
+
+    function cambiaColorTexto(params) {
+      document.getElementsByTagName('h1').item(0).setAttribute('style','color:blue;');
+    }
+
+    // EJERCICIO 2
+
+    document.getElementsByTagName('p').item(0).addEventListener('dblclick',cambiaColorTexto);
+
+
+    // EJERCICIO 3
+
+
+    document.getElementsByName('nombre').item(0).addEventListener('blur', function() {
+      let valor = this.value;
+      this.value = valor.toUpperCase();
+    });
+
+    
+     
+    // FUNCIONES EJERCICIO 4
+
+    function rojo(params) {
+      for (let index = 0; index < document.querySelectorAll('form > p').length; index++) {
+        document.querySelectorAll('form > p').item(i).setAttribute('style','color:blue;weight:bold');
+      }
+    }
+
+
+  </script>
+</form>
