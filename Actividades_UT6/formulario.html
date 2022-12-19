@@ -74,29 +74,20 @@
       this.value = valor.toUpperCase();
     });
 
-    
-     
-    // FUNCIONES EJERCICIO 4
-
-    function rojo(params) {
-     
-        document.querySelectorAll('form > p').item(i).setAttribute('style','color:blue;weight:bold');
-    }
-
     // EJERCICIO 4
 
+    function elementoProjo() {
+      this.parentElement.style.color="red";
+    }
     
     let inputText = document.querySelectorAll("input[type='text']");
 
-    inputText.forEach((input) => {
-      input.addEventListener('blur',(e)=>{
-        console.log(e.target.previousSibling)
-      })
-    });
+    for (let i = 0; i < inputText.length; i++) {
+      inputText.item(i).addEventListener('blur',elementoProjo);
+      
+    }
+
     
-
-
-
     
 
     // EJERCICIO 5
@@ -116,35 +107,30 @@
               year % 4 === 0;
     };
 
+    let pBisiesto = document.createElement('p');
+    let textoPBisiesto = document.createTextNode('Año Bisiesto');
+    pBisiesto.appendChild(textoPBisiesto);
+    pBisiesto.setAttribute('id','año');
+    let añoActual = new Date().getFullYear();
+    
+
     document.getElementsByName('nacido').item(0).addEventListener('input',function() {
-
-      
-
-
       if (esBisiesto(document.getElementsByName('nacido').item(0).value)) {
-
-        if (document.getElementById('bisiesto')==null) {
-
-          if (document.getElementById('no bisiesto')==null) {
-            
-            document.getElementsByName('nacido').item(0).insertAdjacentHTML("afterend","<p id='bisiesto'>Es Bisiesto</p>");
-          } else{
-            document.getElementById('no bisiesto').remove;
-            document.getElementsByName('nacido').item(0).insertAdjacentHTML("afterend","<p id='bisiesto'>Es Bisiesto</p>");
-          }
-        }        
-      } else {
-        if (document.getElementById('no bisiesto')==null) {
-
-          if (document.getElementById('bisiesto')==null) {
-            
-            document.getElementsByName('nacido').item(0).insertAdjacentHTML("afterend","<p id='no bisiesto'>No Es Bisiesto</p>");
-          } else {
-            document.getElementById('bisiesto').remove;
-            document.getElementsByName('nacido').item(0).insertAdjacentHTML("afterend","<p id='no bisiesto'>No Es Bisiesto</p>");
-          }
-        }         
+        if (document.getElementById('año')!=null) {
+          pBisiesto.innerText='Año Bisiesto y tu edad es: '+(añoActual-this.value);
+          document.getElementsByName('nacido').item(0).insertAdjacentElement("afterend",pBisiesto);
+        }else {
+          pBisiesto.innerText='Año Bisiesto y tu edad es:'+(añoActual-this.value);
+        }
+      }else{
+        if (document.getElementById('año')==null) {
+          pBisiesto.innerText='Año No Bisiesto y tu edad es:'+(añoActual-this.value);
+          document.getElementsByName('nacido').item(0).insertAdjacentElement("afterend",pBisiesto);
+        }else {
+          pBisiesto.innerText='Año No Bisiesto y tu edad es:'+(añoActual-this.value);
+        }
       }
+
     });
 
 
@@ -161,14 +147,18 @@
     // EJERCICIO 8 
 
     let contadorRadio=0;
+    let contadorText=0;
+    let acumGlobal=0;
     document.querySelector("input[type=radio]").addEventListener('input',function () {
-
+      contadorRadio++;
+      document.getElementsByTagName('form').item(0).children.item(5).insertAdjacentHTML("afterend","<p id='contador'>"+contador+"</p>");
+    });
+   /* document.querySelector("input[type=select]").addEventListener('input',function () {
+      contadorText++;
       document.getElementsByTagName('form').item(0).children.item(5).insertAdjacentHTML("afterend","<p id='contador'>"+contador+"</p>");
     });
 
-    document.querySelector("input[type=radio]").onclick = function(params) {
-      document.getElementsByTagName('form').item(0).children.item(5).insertAdjacentHTML("afterend","<p id='contador'>hola</p>");
-    }
+  */    
 
 
     // EJERCICIO 9 OK
@@ -190,21 +180,49 @@
     });
 
 
-    // EJERCICIO 11
+    // EJERCICIO 11 OK
 
     document.getElementById('button2').addEventListener('click',function () {
       if (confirm('Estas seguro de que desea borrar el contenido del formulario')) {
-        for (document.getElementsByTagName('input') of document.no) {
-          document.value=null;
-        }
+        document.forms.item(0).reset;
       }
     });
 
     // EJERCICIO 12
 
+    let arrayInputs = document.getElementsByTagName('input');
+    document.getElementById('button1').addEventListener('click', function () {
+      for (let index = 0; index < arrayInputs.length; index++) {
+        if (arrayInputs.item(index).value=="") {
+          alert("Faltan campos por completar");
+          return null;
+        }else{
+          document.getElementById('button2').setAttribute('disabled','disabled');
+        }
+      }
+    });
+
+
     // EJERCICIO 13
+    //let elementoInputClick='<input type="text" name="click">';
+    let elementoInputClick= document.createElement('input');
+    elementoInputClick.setAttribute('id','contadorClick');
+    elementoInputClick.setAttribute('type','text');
+    elementoInputClick.setAttribute('name','click');
+    elementoInputClick.setAttribute('size','10');
+    let contadorClicks=0;
+  
+    document.getElementById('button3').addEventListener('click',function () {
+      contadorClicks++;
+      elementoInputClick.value=contadorClicks;
+      document.getElementById('button3').insertAdjacentElement("afterend",elementoInputClick);
+    });
 
     // EJERCICIO 14
+
+    document.addEventListener('click', (event) => {
+      console.log(event.target);
+      });
 
     // EJERCICIO 15
 
