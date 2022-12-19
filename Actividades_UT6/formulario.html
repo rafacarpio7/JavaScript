@@ -38,7 +38,7 @@
 
   <script>
 
-    //FUNCIONES EJERCICIO 1
+    //FUNCIONES EJERCICIO 1 OK
 
     function aumentaImagen(params) {
       document.getElementsByTagName('img').item(0).setAttribute('width','60px');
@@ -50,23 +50,23 @@
       document.getElementsByTagName('img').item(0).removeAttribute('heigth');
     }
 
-    // EJERCICIO 1
+    // EJERCICIO 1 OK
 
     document.getElementsByTagName('img').item(0).addEventListener('mouseover',aumentaImagen);
     document.getElementsByTagName('img').item(0).addEventListener('mouseout',disminuyeImagen);
 
-    // FUNCIONES EJERCICIO 2
+    // FUNCIONES EJERCICIO 2 OK
 
     function cambiaColorTexto(params) {
       document.getElementsByTagName('h1').item(0).setAttribute('style','color:blue;');
     }
 
-    // EJERCICIO 2
+    // EJERCICIO 2 OK
 
     document.getElementsByTagName('p').item(0).addEventListener('dblclick',cambiaColorTexto);
 
 
-    // EJERCICIO 3
+    // EJERCICIO 3 OK
 
 
     document.getElementsByName('nombre').item(0).addEventListener('blur', function() {
@@ -86,14 +86,27 @@
     // EJERCICIO 4
 
     
+    let inputText = document.querySelectorAll("input[type='text']");
 
-    console.log(document.querySelectorAll('p ~ input'));
+    inputText.forEach((input) => {
+      input.addEventListener('blur',(e)=>{
+        console.log(e.target.previousSibling)
+      })
+    });
+    
+
+
 
     
 
     // EJERCICIO 5
 
     let caracteresEspeciales = (/[.*+\-?^${}()|[\]\\]/g,'\\$&');
+
+    document.getElementsByName('apellidos').item(0).addEventListener('blur',function () {
+      
+           
+    });
 
     // EJERCICIO 6
 
@@ -105,28 +118,95 @@
 
     document.getElementsByName('nacido').item(0).addEventListener('input',function() {
 
-      if (esBisiesto(document.getElementsByName('nacido').item(0).value)) {
-        document.getElementsByName('nacido').item(0).insertAdjacentHTML("afterend","<p>Es Bisiesto</p>");
-      } else {
-        document.getElementsByName('nacido').item(0).insertAdjacentHTML("afterend","<p>No Es Bisiesto</p>");
-      }
       
+
+
+      if (esBisiesto(document.getElementsByName('nacido').item(0).value)) {
+
+        if (document.getElementById('bisiesto')==null) {
+
+          if (document.getElementById('no bisiesto')==null) {
+            
+            document.getElementsByName('nacido').item(0).insertAdjacentHTML("afterend","<p id='bisiesto'>Es Bisiesto</p>");
+          } else{
+            document.getElementById('no bisiesto').remove;
+            document.getElementsByName('nacido').item(0).insertAdjacentHTML("afterend","<p id='bisiesto'>Es Bisiesto</p>");
+          }
+        }        
+      } else {
+        if (document.getElementById('no bisiesto')==null) {
+
+          if (document.getElementById('bisiesto')==null) {
+            
+            document.getElementsByName('nacido').item(0).insertAdjacentHTML("afterend","<p id='no bisiesto'>No Es Bisiesto</p>");
+          } else {
+            document.getElementById('bisiesto').remove;
+            document.getElementsByName('nacido').item(0).insertAdjacentHTML("afterend","<p id='no bisiesto'>No Es Bisiesto</p>");
+          }
+        }         
+      }
     });
 
 
 
-    // EJERCICIO 7
-    console.log(document.getElementsByName('lista1').item(0).children.item(2).value);
+    // EJERCICIO 7 OK
 
-    document.getElementsByName('lista1').item(0).addEventListener('select',function() {
-        alert(document.getElementsByName('lista1').item(0).children.item.value);
+    let nacionalidad = document.querySelector("select[NAME = 'lista1'");
+
+    nacionalidad.addEventListener("change", () =>{
+      alert(nacionalidad.value);
+    })
+
+
+    // EJERCICIO 8 
+
+    let contadorRadio=0;
+    document.querySelector("input[type=radio]").addEventListener('input',function () {
+
+      document.getElementsByTagName('form').item(0).children.item(5).insertAdjacentHTML("afterend","<p id='contador'>"+contador+"</p>");
+    });
+
+    document.querySelector("input[type=radio]").onclick = function(params) {
+      document.getElementsByTagName('form').item(0).children.item(5).insertAdjacentHTML("afterend","<p id='contador'>hola</p>");
+    }
+
+
+    // EJERCICIO 9 OK
+
+    document.getElementById("texto").addEventListener('keyup',function () {
+      if (event.key=='w' || event.key=='W') {
+        alert(event.key);
+      }
     });
 
 
-    // EJERCICIO 8
+    // EJERCICIO 10 OK
 
-    console.log(document.getElementsByTagName('type=radio'));
+    document.getElementById("texto").addEventListener('click',function () {
+      if (document.getElementById("texto").value=="") {
+      }else{
+        alert(window.getSelection().toString());
+      }
+    });
 
+
+    // EJERCICIO 11
+
+    document.getElementById('button2').addEventListener('click',function () {
+      if (confirm('Estas seguro de que desea borrar el contenido del formulario')) {
+        for (document.getElementsByTagName('input') of document.no) {
+          document.value=null;
+        }
+      }
+    });
+
+    // EJERCICIO 12
+
+    // EJERCICIO 13
+
+    // EJERCICIO 14
+
+    // EJERCICIO 15
 
 
   </script>
