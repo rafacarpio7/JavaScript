@@ -222,9 +222,20 @@
 
     document.addEventListener('click', (event) => {
       console.log(event.target);
-      });
+    });
 
     // EJERCICIO 15
+
+    let elementoDiv = document.createElement('div');
+
+
+    document.body.addEventListener('move',function (event) {
+      elementoDiv.innerHTML= "coordenada X: "+event.pageX + "coordenada Y: "+event.pageY;
+      document.getElementById('button3').insertAdjacentElement("afterend",elementoDiv);
+      
+    });
+
+
 
 
   </script>
