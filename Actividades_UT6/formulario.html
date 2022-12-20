@@ -230,7 +230,7 @@
 
 
     document.body.addEventListener('move',function (event) {
-      elementoDiv.innerHTML= "coordenada X: "+event.pageX + "coordenada Y: "+event.pageY;
+      elementoDiv.innerHTML= "coordenada X: "+event.screenX + "coordenada Y: "+event.screenY;
       document.getElementById('button3').insertAdjacentElement("afterend",elementoDiv);
       
     });

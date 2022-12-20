@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        let cadena = '1998-06-17'
+        let fecNac1 = new Date(cadena);
+        let fecNac2 = new Date(prompt("Introduce tu fecha de nacimiento(Año-mes-dia)"));
+
+        let arrayDias = new Array('DOMINGO','LUNES','MARTES','MIERCOLES','JUEVES','VIERNES','SABADO');
+        
+        document.write("<br>El dia de la semana en que naci es : "+ arrayDias[fecNac1.getDay()]+"<br>");
+
+        fecNac1.setFullYear(2023);
+        document.write("<br>El dia de la semana en que naci en 2023 es : "+ arrayDias[fecNac1.getDay()]+"<br>");
+
+        fecNac1.setFullYear(1998);
+
+        let fechaHoy=new Date();
+
+        document.write("<br> Han pasado : "+ (fechaHoy-fecNac1)/(1000*60*60*24)+" dias <br>");
+
+        document.write("<br>Forma 1: "+fechaHoy.toString()+"<br>");
+        document.write("<br>Forma 2: "+fechaHoy.toUTCString()+"<br>");
+        document.write("<br>Forma 3: "+fechaHoy.toDateString()+"<br>");
+        document.write("<br>Forma 4: "+fechaHoy.toISOString()+"<br>");
+        document.write("<br>Forma 5: "+fechaHoy.toTimeString()+"<br>");
+        let fecha1Enero= new Date('2023-01-01');
+        if (fecha1Enero>fecNac1) {
+            document.write("<br> La fecha "+fecNac1.toDateString()+ " es anterior a "+ fecha1Enero.toDateString()+"<br>");
+        } else {
+            document.write("<br> La fecha "+fecNac1.toDateString()+ " es posterior a "+ fecha1Enero.toDateString()+"<br>");
+        }
+
+
+    </script>
+</body>
+</html>
