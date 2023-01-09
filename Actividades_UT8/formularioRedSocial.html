@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <!-- Confeccionar un formulario para crear una cuenta en una red social.
+Campos obligatorios que se deben solicitar:
+- Nombre (longitud entre 3 y 20 letras)
+- Apellidos (longitud entre 4 y 40 letras)
+- Usuario (longitud de al menos 7 caracteres alfanuméricos)
+- Correo electrónico (validar que sea un correo)
+- Número de teléfono: valor numérico de 9 cifras.
+- Fecha de nacimiento (el usuario debe tener al menos 18 años
+para poder crearse una cuenta). Validar que sea una fecha
+valida.
+- Marcar unos intereses de entre unos propuestos, poner al
+menos 5 checkbox, obligando a marcar al menos 2.
+- Cargar una foto de perfil, obligatoriamente, quedará visible al
+final de la página.-->
+
+
+<form>
+    <label for="nombre">Nombre :</label>
+    <input type="text" name="nombre" minlength="3" maxlength="20"><br>
+    <label for="apellidos">Apellidos : </label>
+    <input type="text" name="apellidos" minlength="4" maxlength="40"><br>
+    <label for="usuario">Usuario : </label>
+    <input type="text" name="usuario" pattern="\w{7}"><br>
+    <label for="email">Email : </label>
+    <input type="email" name="email"> <br>
+    <label for="telefono">Telefono : </label>
+    <input type="tel" name="telefono" pattern="[0-9]{9}"><br>
+    <label for="fechaNacimiento">Fecha Nacimiento: </label>
+    <input type="date" name="fechaNacimiento" ><br>
+    <input type="submit" value="Enviar">
+</form>
+</body>
+</html>
