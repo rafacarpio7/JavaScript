@@ -22,21 +22,52 @@ menos 5 checkbox, obligando a marcar al menos 2.
 - Cargar una foto de perfil, obligatoriamente, quedará visible al
 final de la página.-->
 
-
+<h1>Formulario Ejercicio 2</h1>
 <form>
+    
     <label for="nombre">Nombre :</label>
     <input type="text" name="nombre" minlength="3" maxlength="20"><br>
+
     <label for="apellidos">Apellidos : </label>
     <input type="text" name="apellidos" minlength="4" maxlength="40"><br>
+
     <label for="usuario">Usuario : </label>
     <input type="text" name="usuario" pattern="\w{7}"><br>
+
     <label for="email">Email : </label>
     <input type="email" name="email"> <br>
+
     <label for="telefono">Telefono : </label>
     <input type="tel" name="telefono" pattern="[0-9]{9}"><br>
+
     <label for="fechaNacimiento">Fecha Nacimiento: </label>
-    <input type="date" name="fechaNacimiento" ><br>
+    <input type="date" name="fechaNacimiento"><br>
+    <label for="deportes">Deportes</label><input type="checkbox" name="deportes" id=""><br>
+    <label for="cultura">Cultura</label><input type="checkbox" name="cultura" id=""><br>
+    <label for="musica">Musica</label><input type="checkbox" name="musica" id="" checked><br>
+    <label for="arte">Arte</label><input type="checkbox" name="arte" id=""><br>
+    <label for="ciencia">Ciencia</label><input type="checkbox" name="ciencia" id=""><br>
+
     <input type="submit" value="Enviar">
 </form>
+
+<script>
+window.onLoad= function(){
+    
+
+    function checkFecha(params) {
+        console.log(document.getElementsByName("fechaNacimiento").item(0).value);
+        fechaActual = new Date();
+        console.log(fechaActual);
+        if (((fechaActual-document.getElementsByName("fechaNacimiento").item(0).value)/(1000*60*60*24))>=18*365) {
+            alert("Tienes que tener 18 años para poder registrarte");
+        }
+        console.log(((fechaActual-document.getElementsByName("fechaNacimiento").item(0).value)/(1000*60*60*24))>=18*365);
+        
+
+    }
+    checkFecha();
+}
+</script>
 </body>
 </html>
