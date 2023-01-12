@@ -5,6 +5,171 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Ubuntu:wght@400;500;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300&display=swap');
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    text-decoration: none;
+    
+    
+}
+
+li,a,button {
+    font-family: 'Ubuntu', sans-serif;
+    font-weight: 500;
+    font-size: 16px;
+    color: black;
+    text-decoration: none;
+}
+
+
+header {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    padding: 7px 10%;
+    background-color: #fff8f5;
+
+}
+
+.logo-inicio {
+    cursor: pointer;
+    height: 75px;
+    margin-right: auto;
+}
+
+
+.logo {
+    cursor: pointer;
+    height: 75px;
+    margin-right: auto;
+    border: 0.5;
+    border-radius: 30px;
+}
+
+.navbar {
+    list-style: none;
+    
+
+}
+
+.navbar li{
+    display: inline-block;
+    padding: 0px 20px;
+
+}
+
+.navbar li a{
+    transition: all 0.3 ease 0s;
+}
+
+.navbar li a:hover {
+    color: burlywood;
+}
+h1{
+    text-align: center; 
+    padding-top: 25px; 
+    margin-top: 25px;
+    font-family: 'Roboto';
+}
+
+button {
+    margin-left: 40px;
+    padding: 9px 25px;
+    background-color: rgb(223, 235, 156);
+    border: none;
+    border-radius: 50px;
+    cursor: pointer;
+    transition: all 0.3 ease 0s;
+}
+
+button:hover {
+    background-color:burlywood;
+}
+
+body {
+    margin: 0;
+    background: #f5e0d7;
+    font-family: sans-serif;
+    font-weight: 100;
+}
+
+.container {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+table {
+    margin: auto;
+    margin-top: 5px;
+    width: 800px;
+    border-collapse: collapse;
+    overflow: hidden;
+    box-shadow: 0 0 20px rgba(0,0,0,0.1);
+
+}
+
+th,td {
+    padding: 15px;
+    background-color: rgba(255,255,255,0.2);
+    color: rgb(0, 0, 0);
+    font-family: 'roboto';
+}
+
+
+
+th {
+    text-align: center;
+    
+}
+
+    th {
+        background-color: #b6e2d3;
+    }
+
+form {
+    width: 400px;
+    background: #b6e2d3;
+    padding-left: 20px;
+    padding-top: 5px;
+    margin: auto;
+    margin-top: 75px;
+    border-radius: 4px;
+
+
+}
+
+input {
+    width: 150px;
+    padding: 7px;
+    border-radius: 4px;
+    margin-bottom: 15px;
+    margin-left: 10px;
+    border: 1px solid #49a09d;
+    font-family: 'Ubuntu', sans-serif;
+}
+
+legend {
+    font-size: 22px;
+    margin-bottom: 20px;
+    margin-top: 20px;
+}
+
+.inicio {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    
+}
+
+
+   
+    </style>
 </head>
 <body>
     <!-- Confeccionar un formulario para crear una cuenta en una red social.
@@ -42,32 +207,78 @@ final de la página.-->
 
     <label for="fechaNacimiento">Fecha Nacimiento: </label>
     <input type="date" name="fechaNacimiento"><br>
+    <p id="edad"></p>
     <label for="deportes">Deportes</label><input type="checkbox" name="deportes" id=""><br>
     <label for="cultura">Cultura</label><input type="checkbox" name="cultura" id=""><br>
     <label for="musica">Musica</label><input type="checkbox" name="musica" id="" checked><br>
     <label for="arte">Arte</label><input type="checkbox" name="arte" id=""><br>
     <label for="ciencia">Ciencia</label><input type="checkbox" name="ciencia" id=""><br>
+    <label for="imagen">Inserta una imagen: </label><br><input type="file" name="imagen" id="inputFile1"><br>
 
-    <input type="submit" value="Enviar">
+    <img id="img1"  height="100px" width="100px" border="solid 1px"><br>
+
+    <input type="submit" name="btnEnviar" value="Enviar">
 </form>
 
 <script>
-window.onLoad= function(){
+
     
-
-    function checkFecha(params) {
-        console.log(document.getElementsByName("fechaNacimiento").item(0).value);
-        fechaActual = new Date();
-        console.log(fechaActual);
-        if (((fechaActual-document.getElementsByName("fechaNacimiento").item(0).value)/(1000*60*60*24))>=18*365) {
-            alert("Tienes que tener 18 años para poder registrarte");
-        }
-        console.log(((fechaActual-document.getElementsByName("fechaNacimiento").item(0).value)/(1000*60*60*24))>=18*365);
-        
-
+    document.getElementsByName('fechaNacimiento').item(0).addEventListener('input',function calcularEdad() {
+    let fecha_nacimiento= document.getElementsByName('fechaNacimiento').item(0).value;
+    let hoy = new Date();
+    let cumpleanos = new Date(fecha_nacimiento);
+    let edad = hoy.getFullYear() - cumpleanos.getFullYear();
+    let m = hoy.getMonth() - cumpleanos.getMonth();
+    if (m < 0 || (m === 0 && hoy.getDate() < cumpleanos.getDate())) {
+        edad--;
     }
-    checkFecha();
+    if (edad < 18) {
+        alert("Tu edad debe ser mayor de 18 años");
+        
+        document.getElementsByName('btnEnviar').item(0).setAttribute('disabled','disabled');
+    } else {
+        document.getElementById("edad").innerHTML="Tu edad es: "+ edad;
+        document.getElementsByName('btnEnviar').item(0).removeAttribute('disabled','disabled');
+    }
+    });
+
+
+let contChecks=0;
+
+for (let i = 0; i < document.querySelector("input[type=checkbox]").length; index++) {
+    
+        document.querySelectorAll("input[type=checkbox]")[i].addEventListener('click',function checkBox() {
+            if (document.querySelectorAll("input[type=checkbox]")[i].checked) {
+                contChecks++;
+            }
+        })
+        
 }
+if (contChecks>=2) {
+    document.getElementsByName('btnEnviar').item(0).setAttribute('disabled','disabled');
+}
+console.log(document.getElementsByName('btnEnviar').item(0));
+
+
+
+function init() {
+  var inputFile = document.getElementById('inputFile1');
+  inputFile.addEventListener('change', mostrarImagen, false);
+}
+
+function mostrarImagen(event) {
+  let file = event.target.files[0];
+  let reader = new FileReader();
+  reader.onload = function(event) {
+    let img = document.getElementById('img1');
+    img.src= event.target.result;
+  }
+  reader.readAsDataURL(file);
+}
+
+window.addEventListener('load', init, false);
+
+
 </script>
 </body>
 </html>
