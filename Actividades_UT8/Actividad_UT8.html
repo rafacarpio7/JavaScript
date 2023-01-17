@@ -58,7 +58,7 @@
         </li>
         <li>
           <label for="phone">Phone number:</label>
-          <input type="tel" name="phone" id="phone" max="15" required>
+          <input type="tel" name="phone" id="phone" max="15" pattern="[0-9]{9}" required>
         </li>
         <li>
           <label for="comment">Comment:</label>
@@ -124,7 +124,19 @@ function showError() {
     // Establece el estilo apropiado
     emailError.className = 'error activo';
 }
+    const textarea = document.querySelector('textarea');
 
+
+    textarea.addEventListener('input',function (event) {
+      if (document.querySelector('textarea').value=='') {
+      textarea.className='error activo';
+    }else if(document.querySelector('textarea').value=='          '){
+      textarea.className='error activo';
+    }else{
+
+    }
+    });
+    
 
 
 
