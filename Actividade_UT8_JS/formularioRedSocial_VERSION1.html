@@ -211,7 +211,7 @@ final de la página.-->
     <input type="email" name="email" required> <br>
 
     <label for="telefono">Telefono : </label>
-    <input type="tel" name="telefono" pattern="[0-9]{9}" required><br>
+    <input type="tel" name="telefono" pattern="^[6-9]\d{8}$" required><br>
 
     <label for="fechaNacimiento">Fecha Nacimiento: </label>
     <input type="date" name="fechaNacimiento" required><br>
@@ -229,7 +229,7 @@ final de la página.-->
 </form>
 
 <script>
-
+window.addEventListener('load', init, false);
     document.getElementsByName("usuario").item(0).addEventListener('input',function(params) {
         document.getElementsByName("email").item(0).value=document.getElementsByName("usuario").item(0).value + "@gmail.com";
     });
@@ -290,7 +290,7 @@ function mostrarImagen(event) {
   reader.readAsDataURL(file);
 }
 
-window.addEventListener('load', init, false);
+
 email.addEventListener('input', function (event) {
 
 if (email.validity.valid) {
@@ -306,6 +306,10 @@ if(!email.validity.valid) {
   showError();
   event.preventDefault();
 }
+});
+
+document.getElementsByName('telefono').item(0).addEventListener('input',function(event) {
+    document.getElementsByName('telefono').item(0).value
 });
 
 </script>
