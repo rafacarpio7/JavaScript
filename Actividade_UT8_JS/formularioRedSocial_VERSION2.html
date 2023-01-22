@@ -194,9 +194,9 @@ final de la página.-->
             document.getElementById('fechaError').innerHTML="<b>FECHA</b> campo obligatorio";
         } else if(fecha.validity.patternMismatch){
             document.getElementById('fechaError').innerHTML="<b>FECHA</b> no es una fecha";
-        }else if(validateBirthdate(fecha.value)){
-            document.getElementById('fechaError').innerHTML="La red social no es adecuada para usuarios menores de 18 o mayores de 99 años";
         }
+    }else if(validateBirthdate(fecha.value)){
+        document.getElementById('fechaError').innerHTML="La red social no es adecuada para usuarios menores de 18 o mayores de 99 años";
     }else{
         fecha.className='';
         document.getElementById('fechaError').innerHTML="";
