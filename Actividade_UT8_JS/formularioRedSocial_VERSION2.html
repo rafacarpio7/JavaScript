@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+body {
+        background-color: #fff;
+        color: #333;
+        font: 1em / 1.4 Helvetica Neue, Helvetica, Arial, sans-serif;
+        padding: 1em;
+        margin: 0;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      .errorMessage {
+        color: red;
+      }
+
+     
+
+      .error {
+       border: 2px solid red;
+
+        box-sizing: border-box;
+      }
+
+      .error.active {
+        padding: 0.3em;
+      }
+   
+    </style>
+</head>
+<body>
+    <!-- Confeccionar un formulario para crear una cuenta en una red social.
+Campos obligatorios que se deben solicitar:
+- Nombre (longitud entre 3 y 20 letras)
+- Apellidos (longitud entre 4 y 40 letras)
+- Usuario (longitud de al menos 7 caracteres alfanuméricos)
+- Correo electrónico (validar que sea un correo)
+- Número de teléfono: valor numérico de 9 cifras.
+- Fecha de nacimiento (el usuario debe tener al menos 18 años
+para poder crearse una cuenta). Validar que sea una fecha
+valida.
+- Marcar unos intereses de entre unos propuestos, poner al
+menos 5 checkbox, obligando a marcar al menos 2.
+- Cargar una foto de perfil, obligatoriamente, quedará visible al
+final de la página.-->
+
+<h1>Formulario Ejercicio 2</h1>
+<form id="form" novalidate>
+    
+    <label for="nombre">Nombre :</label>
+    <input type="text" name="nombre" id="nombre" minlength="3" maxlength="20" required><br>
+
+    <label for="apellidos">Apellidos : </label>
+    <input type="text" name="apellidos" id="apellidos" minlength="4" maxlength="40" required><br>
+
+    <label for="usuario">Usuario : </label>
+    <input type="text" name="usuario" id="usuario" minlength="7" required><br>
+
+    <label for="email">Email : </label>
+    <input type="email" name="email" id="email" required><br>
+    
+
+    <label for="telefono">Telefono : </label>
+    <input type="tel" name="telefono" id="telefono" pattern="^[6-9]\d{8}$" required><br>
+
+    <label for="fechaNacimiento">Fecha Nacimiento: </label>
+    <input type="date" name="fechaNacimiento" id="fechaNacimiento"  required><br>
+    <p id="edad"></p>
+    <label for="deportes">Deportes</label><input type="checkbox" name="deportes" id=""><br>
+    <label for="cultura">Cultura</label><input type="checkbox" name="cultura" id=""><br>
+    <label for="musica">Musica</label><input type="checkbox" name="musica" id=""><br>
+    <label for="arte">Arte</label><input type="checkbox" name="arte" id=""><br>
+    <label for="ciencia">Ciencia</label><input type="checkbox" name="ciencia" id=""><br>
+    <label for="imagen">Inserta una imagen: </label><br><input type="file" name="imagen" id="inputFile1" ><br>
+
+    <img id="img1"  height="100px" width="100px" border="solid 1px"><br>
+    <span id="nombreError" class="errorMessage"></span> <br>
+    <span id="apellidosError" class="errorMessage"></span> <br>
+    <span id="usuarioError" class="errorMessage"></span> <br>
+    <span id="emailError" class="errorMessage"></span> <br>
+    <span id="telefonoError" class="errorMessage"></span> <br>
+    <span id="fechaError" class="errorMessage"></span> <br>
+    <input type="submit" name="btnEnviar" value="Enviar">
+</form>
+
+<script>
+    const nombre = document.getElementById('nombre');
+    const apellidos = document.getElementById('apellidos');
+    const user = document.getElementById('usuario');
+    const email = document.getElementById('email');
+    const telefono = document.getElementById('telefono');
+    const fecha = document.getElementById('fechaNacimiento');
+
+    document.getElementById('form').addEventListener('submit',function (event) {
+
+
+    if (!nombre.checkValidity()) {
+        
+        nombre.className='error';
+        if (nombre.validity.valueMissing) {
+            document.getElementById('nombreError').innerHTML="<b>NOMBRE</b> campo obligatorio";
+        } else if(nombre.validity.typeMismatch){
+            document.getElementById('nombreError').innerHTML="<b>NOMBRE</b> no puede contener caracteres especiales ni numeros";
+        } else if(nombre.validity.tooShort){
+            document.getElementById('nombreError').innerHTML="<b>NOMBRE</b> debe tener entre 3 y 20 caracteres";
+        } else if(nombre.validity.tooLong){
+            document.getElementById('nombreError').innerHTML="<b>NOMBRE</b> debe tener entre 3 y 20 caracteres";
+        }
+    }else{
+        nombre.className='';
+        document.getElementById('nombreError').innerHTML="";
+    }
+
+
+    if (!apellidos.checkValidity()) {
+        
+        apellidos.className='error';
+        if (apellidos.validity.valueMissing) {
+            document.getElementById('apellidosError').innerHTML="<b>APELLIDOS</b> campo obligatorio";
+        } else if(apellidos.validity.typeMismatch){
+            document.getElementById('apellidosError').innerHTML="<b>APELLIDOS</b> no puede contener caracteres especiales ni numeros";
+        } else if(apellidos.validity.tooShort){
+            document.getElementById('apellidosError').innerHTML="<b>APELLIDOS</b> debe tener entre 4 y 40 caracteres";
+        } else if(apellidos.validity.tooLong){
+            document.getElementById('apellidosError').innerHTML="<b>APELLIDOS</b> debe tener entre 4 y 40 caracteres";
+        }
+    }else{
+        apellidos.className='';
+        document.getElementById('apellidosError').innerHTML="";
+    }
+
+
+        
+    if (!user.checkValidity()) {
+        
+        user.className='error';
+        if (user.validity.valueMissing) {
+            document.getElementById('usuarioError').innerHTML="<b>USUARIO</b> campo obligatorio";
+        } else if(user.validity.tooShort){
+            document.getElementById('usuarioError').innerHTML="<b>USUARIO</b> debe tener al menos 7 caracteres";
+        }
+    }else{
+        user.className='';
+        document.getElementById('usuarioError').innerHTML="";
+    }
+
+    if (!email.checkValidity()) {
+        
+        email.className='error';
+        if (email.validity.valueMissing) {
+            document.getElementById('emailError').innerHTML="<b>CORREO</b> campo obligatorio";
+        } else if(email.validity.typeMismatch){
+            document.getElementById('emailError').innerHTML="<b>CORREO</b> introducido no es email";
+        } else if(email.value !== user.value + "@gmail.com"){
+            
+            document.getElementById('emailError').innerHTML="<b>CORREO</b> debe ser "+user.value+"@gmail.com";
+        }
+    }else if(email.value !== user.value + "@gmail.com") {
+        email.className='error';
+        document.getElementById('emailError').innerHTML="<b>CORREO</b> debe ser "+user.value+"@gmail.com";
+    }else{
+        email.className='';
+        document.getElementById('emailError').innerHTML="";
+    }
+
+
+    if (!telefono.checkValidity()) {
+        
+        telefono.className='error';
+        if (telefono.validity.valueMissing) {
+            document.getElementById('telefonoError').innerHTML="<b>TELEFFONO</b> campo obligatorio";
+        } else if(telefono.validity.patternMismatch){
+            document.getElementById('telefonoError').innerHTML="<b>TELEFFONO</b> debe comenzar 6, 7, 8 o 9 y tener una extension fija de 9 cifras";
+        }
+    }else{
+        telefono.className='';
+        document.getElementById('telefonoError').innerHTML="";
+    }
+
+    console.log(validateBirthdate(fecha.value));
+    console.log(fecha.checkValidity());
+    if (!fecha.checkValidity()) {
+        
+        fecha.className='error';
+        if (fecha.validity.valueMissing) {
+            document.getElementById('fechaError').innerHTML="<b>FECHA</b> campo obligatorio";
+        } else if(fecha.validity.patternMismatch){
+            document.getElementById('fechaError').innerHTML="<b>FECHA</b> no es una fecha";
+        }else if(validateBirthdate(fecha.value)){
+            document.getElementById('fechaError').innerHTML="La red social no es adecuada para usuarios menores de 18 o mayores de 99 años";
+        }
+    }else{
+        fecha.className='';
+        document.getElementById('fechaError').innerHTML="";
+    }
+
+
+
+
+
+
+
+    event.preventDefault();
+    });
+
+    function validateBirthdate(cumple) {
+        var birthdate = cumple;
+        var today = new Date();
+        var minAge = new Date(today.getFullYear() - 99, today.getMonth(), today.getDate());
+        var maxAge = new Date(today.getFullYear() - 18, today.getMonth(), today.getDate());
+        
+        if (birthdate < minAge || birthdate > maxAge) {
+            return false;
+        } else {
+            return true;
+        }
+    }
+    
+
+</script>
+</body>
+</html>
