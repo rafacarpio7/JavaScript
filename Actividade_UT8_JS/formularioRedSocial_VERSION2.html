@@ -53,7 +53,7 @@ menos 5 checkbox, obligando a marcar al menos 2.
 final de la página.-->
 
 <h1>Formulario Ejercicio 2</h1>
-<form id="form" novalidate>
+<form id="form"  method="get" novalidate>
     
     <label for="nombre">Nombre :</label>
     <input type="text" name="nombre" id="nombre" minlength="3" maxlength="20" required><br>
@@ -73,22 +73,15 @@ final de la página.-->
 
     <label for="fechaNacimiento">Fecha Nacimiento: </label>
     <input type="date" name="fechaNacimiento" id="fechaNacimiento"  required><br>
-    <p id="edad"></p>
-    <label for="deportes">Deportes</label><input type="checkbox" name="deportes" id=""><br>
-    <label for="cultura">Cultura</label><input type="checkbox" name="cultura" id=""><br>
-    <label for="musica">Musica</label><input type="checkbox" name="musica" id=""><br>
-    <label for="arte">Arte</label><input type="checkbox" name="arte" id=""><br>
-    <label for="ciencia">Ciencia</label><input type="checkbox" name="ciencia" id=""><br>
-    <label for="imagen">Inserta una imagen: </label><br><input type="file" name="imagen" id="inputFile1" ><br>
-
-    <img id="img1"  height="100px" width="100px" border="solid 1px"><br>
+    
     <span id="nombreError" class="errorMessage"></span> <br>
     <span id="apellidosError" class="errorMessage"></span> <br>
     <span id="usuarioError" class="errorMessage"></span> <br>
     <span id="emailError" class="errorMessage"></span> <br>
     <span id="telefonoError" class="errorMessage"></span> <br>
     <span id="fechaError" class="errorMessage"></span> <br>
-    <input type="submit" name="btnEnviar" value="Enviar">
+    <input type="submit"id="btnEnviar" name="btnEnviar" value="validar">
+    
 </form>
 
 <script>
@@ -98,8 +91,9 @@ final de la página.-->
     const email = document.getElementById('email');
     const telefono = document.getElementById('telefono');
     const fecha = document.getElementById('fechaNacimiento');
+    const enviar = document.getElementById('btnEnviar');
 
-    document.getElementById('form').addEventListener('submit',function (event) {
+    enviar.addEventListener('click', (event)=> {
 
 
     if (!nombre.checkValidity()) {
@@ -107,12 +101,20 @@ final de la página.-->
         nombre.className='error';
         if (nombre.validity.valueMissing) {
             document.getElementById('nombreError').innerHTML="<b>NOMBRE</b> campo obligatorio";
+            event.preventDefault();
+
         } else if(nombre.validity.typeMismatch){
             document.getElementById('nombreError').innerHTML="<b>NOMBRE</b> no puede contener caracteres especiales ni numeros";
+            event.preventDefault();
+
         } else if(nombre.validity.tooShort){
             document.getElementById('nombreError').innerHTML="<b>NOMBRE</b> debe tener entre 3 y 20 caracteres";
+            event.preventDefault();
+
         } else if(nombre.validity.tooLong){
             document.getElementById('nombreError').innerHTML="<b>NOMBRE</b> debe tener entre 3 y 20 caracteres";
+            event.preventDefault();
+
         }
     }else{
         nombre.className='';
@@ -125,12 +127,20 @@ final de la página.-->
         apellidos.className='error';
         if (apellidos.validity.valueMissing) {
             document.getElementById('apellidosError').innerHTML="<b>APELLIDOS</b> campo obligatorio";
+            event.preventDefault();
+
         } else if(apellidos.validity.typeMismatch){
             document.getElementById('apellidosError').innerHTML="<b>APELLIDOS</b> no puede contener caracteres especiales ni numeros";
+            event.preventDefault();
+
         } else if(apellidos.validity.tooShort){
             document.getElementById('apellidosError').innerHTML="<b>APELLIDOS</b> debe tener entre 4 y 40 caracteres";
+            event.preventDefault();
+
         } else if(apellidos.validity.tooLong){
             document.getElementById('apellidosError').innerHTML="<b>APELLIDOS</b> debe tener entre 4 y 40 caracteres";
+            event.preventDefault();
+
         }
     }else{
         apellidos.className='';
@@ -144,8 +154,12 @@ final de la página.-->
         user.className='error';
         if (user.validity.valueMissing) {
             document.getElementById('usuarioError').innerHTML="<b>USUARIO</b> campo obligatorio";
+            event.preventDefault();
+
         } else if(user.validity.tooShort){
             document.getElementById('usuarioError').innerHTML="<b>USUARIO</b> debe tener al menos 7 caracteres";
+            event.preventDefault();
+
         }
     }else{
         user.className='';
@@ -157,15 +171,23 @@ final de la página.-->
         email.className='error';
         if (email.validity.valueMissing) {
             document.getElementById('emailError').innerHTML="<b>CORREO</b> campo obligatorio";
+            event.preventDefault();
+
         } else if(email.validity.typeMismatch){
             document.getElementById('emailError').innerHTML="<b>CORREO</b> introducido no es email";
+            event.preventDefault();
+
         } else if(email.value !== user.value + "@gmail.com"){
             
             document.getElementById('emailError').innerHTML="<b>CORREO</b> debe ser "+user.value+"@gmail.com";
+            event.preventDefault();
+
         }
     }else if(email.value !== user.value + "@gmail.com") {
         email.className='error';
         document.getElementById('emailError').innerHTML="<b>CORREO</b> debe ser "+user.value+"@gmail.com";
+        event.preventDefault();
+
     }else{
         email.className='';
         document.getElementById('emailError').innerHTML="";
@@ -177,52 +199,50 @@ final de la página.-->
         telefono.className='error';
         if (telefono.validity.valueMissing) {
             document.getElementById('telefonoError').innerHTML="<b>TELEFFONO</b> campo obligatorio";
+            event.preventDefault();
+
         } else if(telefono.validity.patternMismatch){
             document.getElementById('telefonoError').innerHTML="<b>TELEFFONO</b> debe comenzar 6, 7, 8 o 9 y tener una extension fija de 9 cifras";
+            event.preventDefault();
+
         }
     }else{
         telefono.className='';
         document.getElementById('telefonoError').innerHTML="";
     }
-
-    console.log(validateBirthdate(fecha.value));
-    console.log(fecha.checkValidity());
+    console.log(calcularEdad(fecha.value));
     if (!fecha.checkValidity()) {
-        
         fecha.className='error';
         if (fecha.validity.valueMissing) {
             document.getElementById('fechaError').innerHTML="<b>FECHA</b> campo obligatorio";
+            event.preventDefault();
         } else if(fecha.validity.patternMismatch){
             document.getElementById('fechaError').innerHTML="<b>FECHA</b> no es una fecha";
+            event.preventDefault();
         }
-    }else if(!validateBirthdate(fecha.value)){
+    }else if(calcularEdad(fecha.value)<18 || calcularEdad(fecha.value)>99){
+        
         document.getElementById('fechaError').innerHTML="La red social no es adecuada para usuarios menores de 18 o mayores de 99 años";
+        event.preventDefault();
+
     }else{
+
         fecha.className='';
         document.getElementById('fechaError').innerHTML="";
     }
 
-
-
-
-
-
-
-    event.preventDefault();
     });
-
-    function validateBirthdate(cumple) {
-        var birthdate = cumple;
-        var today = new Date();
-        var minAge = new Date(today.getFullYear() - 99, today.getMonth(), today.getDate());
-        var maxAge = new Date(today.getFullYear() - 18, today.getMonth(), today.getDate());
-        
-        if (birthdate < minAge || birthdate > maxAge) {
-            return false;
-        } else {
-            return true;
-        }
+    
+    function calcularEdad(fecha_nacimiento) {
+    let hoy = new Date();
+    let cumpleanos = new Date(fecha_nacimiento);
+    let edad = hoy.getFullYear() - cumpleanos.getFullYear();
+    let m = hoy.getMonth() - cumpleanos.getMonth();
+    if (m < 0 || (m === 0 && hoy.getDate() < cumpleanos.getDate())) {
+        edad--;
     }
+    return edad;
+}
     
 
 </script>
