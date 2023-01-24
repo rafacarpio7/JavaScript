@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AJAX FORM</title>
+</head>
+<body>
+    <h2>FORMULARIO PRUEBA JSON</h2>
+    <form action="" method="post">
+        NOMBRE DE PRODUCTO : <input type="text" name="nombre" id="nombre"><br>
+        PRECIO DEL PRODUCTO :<input type="number" name="precio" id="precio"><br>
+        DESCRIPCION DEL PRODUCTO : <input type="text" name="descripcion" id="descripcion"><br>
+        ID DE CATEGORIA DEL PRODCUTO : <input type="number" name="idCategoria" id="idCategoria"><br>
+        <input type="submit" id="btnEnviar" name="btnEnviar" value="Enviar">
+    </form>
+
+    <script>
+        const getBtn = document.getElementById('get-btn');
+        const postBtn = document.getElementById('post-btn');
+        const sendHttpRequest = (tipoPeticion, uri ,datos) => {
+            const peticion = new XMLHttpRequest();
+            peticion.open(tipoPeticion);
+
+            if (datos) {
+                peticion.setRequestHeader('Content-Type','application/json');
+            }
+            peticion.onload = () => {
+                const datos = JSON.parse(peticion.response);
+                console.log(datos);
+            }
+            peticion.send(JSON.stringify(datos));
+        };
+
+        const getData = () => {
+            peticion.open('GET','http://localhost:3000/products');
+        };
+
+        const sendData = () => {
+            const peticion=new XMLHttpRequest();
+            peticion.open('POST','http://localhost:3000/products',{
+                name: "monitor FHD",
+                price: 140.99,
+                description: "monitor FHD Samsung",
+                categoryId: 1});
+        };
+
+
+    </script>
+</body>
+</html>
