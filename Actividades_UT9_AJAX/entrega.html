@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Versión 3 - Dante Ariel Pepa</title>
+    <style>
+        * {
+            padding: 0px;
+            margin: 0px;
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        #contenedor {
+            height: 38vh;
+            text-align: center;
+        }
+
+        #contenedor_izquierda {
+            background-color: #77dd77;
+            width: 50%;
+            float: left;
+            height: 100%;
+        }
+
+        #contenedor_derecha {
+            background-color: #8bb7a8;
+            height: 100%;
+        }
+
+        input[type="submit"] {
+            border-radius: 1vh;
+            border: 1px solid black;
+            padding: 1vh;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="contenedor">
+        <div id="contenedor_izquierda">
+            <h1>PRODUCTOS</h1>
+            <form action="" method="post" id="formulario_producto">
+                <label for="nombre"><b>Nombre:</b></label>
+                <input type="text" name="nombre" required pattern="[a-zA-Z]+" id="nombre_producto"><br><br>
+                <label for="precio"><b>Precio (#,#):</b></label>
+                <input type="number" name="precio" pattern="[0-9]+([,\.][0-9]+)?" required id="precio_producto"><br><br>
+                <label for="descripcion"><b>Descripción:</b></label>
+                <input type="text" name="descripcion" required pattern="[a-zA-Z]+" id="descripcion_producto"><br><br>
+                <label for="categoria"><b>Categoría:</b></label>
+                <select name="categoria" required id="categoria_producto">
+                    <option value="" selected disabled hidden>-- selecciona aquí --</option>
+                    <option value="1">Categoría 1</option>
+                    <option value="2">Categoría 2</option>
+                </select><br><br>
+                <input type="button" value="Insertar" name="boton_insertar_producto" onclick="insertar_producto()">
+            </form>
+        </div>
+
+        <div id="contenedor_derecha">
+            <h1>CATEGORÍAS</h1>
+            <form action="" method="post">
+                <label for="nombre"><b>Nombre:</b></label>
+                <input type="text" name="nombre" required pattern="[a-zA-Z]+" id="nombre_categoria"><br><br>
+                <label for="descripcion"><b>Descripción:</b></label>
+                <input type="text" name="descripcion" required pattern="[a-zA-Z]+" id="descripcion_categoria"><br><br>
+                <input type="button" value="Insertar" name="boton_insertar_categoria" onclick="insertar_categoria()">
+            </form>
+        </div>
+    </div>
+
+    <!-- SECCIÓN JS -->
+    <script>
+        function insertar_producto() {
+        
+            if(document.getElementById("formulario_producto").checkValidity()){
+
+            // Inicializamos las variables
+            let nombre_producto = document.getElementById("nombre_producto").value;
+            let precio_producto = document.getElementById("precio_producto").value;
+            let descripcion_producto = document.getElementById("descripcion_producto").value;
+            let categoria_producto = document.getElementById("categoria_producto").value;
+
+
+            const peticion = new XMLHttpRequest();
+            peticion.open('POST', 'http://localhost:3000/products');
+
+            peticion.setRequestHeader('Content-Type', 'application/json');
+
+            peticion.onload = () => {
+                const data = JSON.parse(peticion.response);
+                console.log(data);
+            };
+
+            peticion.send(JSON.stringify({
+                name: nombre_producto,
+                price: precio_producto,
+                description: descripcion_producto,
+                categoryId: categoria_producto,
+            }));
+
+            document.location.reload();
+
+            }else alert("Tus campos no cumples los requisitos.");
+        }
+
+        function insertar_categoria() {
+            const peticion = new XMLHttpRequest();
+            peticion.open('POST', 'http://localhost:3000/categories');
+
+            peticion.setRequestHeader('Content-Type', 'application/json');
+
+            peticion.onload = () => {
+                const data = JSON.parse(peticion.response);
+                console.log(data);
+            };
+
+            peticion.send(JSON.stringify({
+                name: document.getElementById("nombre_categoria").value,
+                description: document.getElementById("descripcion_categoria").value,
+            }));
+        }
+    </script>
+</body>
+
+</html>
