@@ -176,47 +176,46 @@ input:invalid{
 
 
     </style>
-    <title>Version 3</title>
+    <title>Version 3 - Rafael Torralba Redondo</title>
 </head>
 <body>
-            <h1>PRODUCTOS</h1>
-            <form action="" method="post" id="formulario_producto">
-                <label for="nombre"><b>Nombre:</b></label>
-                <input type="text" name="nombre" required pattern="[a-zA-Z]+" id="nombre_producto"><br><br>
-                <label for="precio"><b>Precio :</b></label>
-                <input type="number" name="precio" pattern="[0-9]+([,\.][0-9]+)?" required id="precio_producto"><br><br>
-                <label for="descripcion"><b>Descripción:</b></label>
-                <input type="text" name="descripcion" required pattern="[a-zA-Z]+" id="descripcion_producto"><br><br>
-                <label for="categoria"><b>Categoría:</b></label>
-                <select name="categoria" required id="categoria_producto">
+            <h1>INSERTA PRODUCTOS</h1>
+            <form id="formProducto" method="post" >
+                <label for="nombre">Nombre:</label>
+                <input type="text" id="nombreProducto" name="nombre" pattern="[a-zA-Z]+" required><br><br>
+                <label for="precio">Precio :</label>
+                <input type="number" id="precioProducto" name="precio" pattern="[0-9]+([,\.][0-9]+)?" required><br><br>
+                <label for="descripcion">Descripción :</label>
+                <input type="text" id="descripcionProducto" name="descripcion" pattern="[a-zA-Z]+" required><br><br>
+                <label for="categoria">Categoría :</label>
+                <select name="categoria" id="categoriaProducto" required >
                     <option value="" selected disabled hidden>-- selecciona aquí --</option>
                     <option value="1">Categoría 1</option>
                     <option value="2">Categoría 2</option>
                 </select><br><br>
-                <input type="button" value="Insertar" name="boton_insertar_producto" onclick="insertar_producto()">
+                <input type="button" value="Insertar" name="btnProducto" onclick="producto()">
             </form>
         </div>
 
-            <h1>CATEGORÍAS</h1>
+            <h1>INSERTA CATEGORÍAS</h1>
             <form action="" method="post">
-                <label for="nombre"><b>Nombre:</b></label>
-                <input type="text" name="nombre" required pattern="[a-zA-Z]+" id="nombre_categoria"><br><br>
-                <label for="descripcion"><b>Descripción:</b></label>
-                <input type="text" name="descripcion" required pattern="[a-zA-Z]+" id="descripcion_categoria"><br><br>
-                <input type="button" value="Insertar" name="boton_insertar_categoria" onclick="insertar_categoria()">
+                <label for="nombre">Nombre :</label>
+                <input type="text" id="nombreCategoria" name="nombre" pattern="[a-zA-Z]+" required><br><br>
+                <label for="descripcion">Descripción :</label>
+                <input type="text" id="descripcionCategoria" name="descripcion" pattern="[a-zA-Z]+" required><br><br>
+                <input type="button" value="Insertar" name="btnCategoria" onclick="categoria()">
             </form>
         </div>
     </div>
     <script>
-        function insertar_producto() {
+        function producto() {
         
-            if(document.getElementById("formulario_producto").checkValidity()){
+            if(document.getElementById("formProducto").checkValidity()){
 
-            // Inicializamos las variables
-            let nombre_producto = document.getElementById("nombre_producto").value;
-            let precio_producto = document.getElementById("precio_producto").value;
-            let descripcion_producto = document.getElementById("descripcion_producto").value;
-            let categoria_producto = document.getElementById("categoria_producto").value;
+            let nombreProducto = document.getElementById("nombreProducto").value;
+            let precioProducto = document.getElementById("precioProducto").value;
+            let descripcionProducto = document.getElementById("descripcionProducto").value;
+            let categoriaProducto = document.getElementById("categoriaProducto").value;
 
 
             const peticion = new XMLHttpRequest();
@@ -230,18 +229,20 @@ input:invalid{
             };
             
             peticion.send(JSON.stringify({
-                name: nombre_producto,
-                price: precio_producto,
-                description: descripcion_producto,
-                categoryId: categoria_producto,
+                name: nombreProducto,
+                price: precioProducto,
+                description: descripcionProducto,
+                categoryId: categoriaProducto,
             }));
 
-            document.location.reload();
+            setTimeout(() => {
+                    document.location.reload();
+                }, 300);
 
-            }else alert("Tus campos no cumples los requisitos.");
+            }else alert("Cumple con los patrones establecidos");
         }
 
-        function insertar_categoria() {
+        function categoria() {
             const peticion = new XMLHttpRequest();
             peticion.open('POST', 'http://localhost:3000/categories');
 
@@ -253,9 +254,12 @@ input:invalid{
             };
 
             peticion.send(JSON.stringify({
-                name: document.getElementById("nombre_categoria").value,
-                description: document.getElementById("descripcion_categoria").value,
+                name: document.getElementById("nombreCategoria").value,
+                description: document.getElementById("descripcionCategoria").value,
             }));
+            setTimeout(() => {
+                    document.location.reload();
+                }, 300);
         }
     </script>
 </body>

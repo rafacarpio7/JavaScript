@@ -29,51 +29,32 @@
       "categoryId": 2
     },
     {
-      "nombreProducto": "rafa",
-      "precio": "10",
-      "descripcionProducto": "hola",
+      "name": "rafa",
+      "price": "10",
+      "description": "asd",
+      "categoryId": "2",
       "id": 5
     },
     {
-      "nombreProducto": "arafa",
-      "precio": "12",
-      "descripcionProducto": "hola",
+      "name": "pedro",
+      "price": "10",
+      "description": "assdasd",
+      "categoryId": "1",
       "id": 6
     },
     {
       "name": "Rafael",
-      "price": "20",
-      "description": "asdasda",
-      "categoryId": "2",
+      "price": "10",
+      "description": "asdasd",
+      "categoryId": "1",
       "id": 7
     },
     {
-      "name": "rafa",
-      "price": "10",
-      "description": "hola",
+      "name": "dani",
+      "price": "0",
+      "description": "asdasda",
       "categoryId": "1",
       "id": 8
-    },
-    {
-      "name": "rafa",
-      "price": "10",
-      "description": "hola",
-      "categoryId": "1",
-      "id": 9
-    },
-    {
-      "name": "rafa",
-      "price": "10",
-      "description": "hola",
-      "categoryId": "1",
-      "id": 10
-    },
-    {
-      "name": "rafa",
-      "price": "10",
-      "description": "dani",
-      "categoryId": "1",
-      "id": 11
     }
   ],
   "categories": [
@@ -88,54 +69,9 @@
       "description": "mouse, monitors, keyboards, etc"
     },
     {
-      "name": "Rafael",
-      "description": "asdasdasda",
+      "name": "hola",
+      "description": "asdasdasd",
       "id": 3
-    },
-    {
-      "name": "Rafael",
-      "description": "asdasda",
-      "id": 4
-    },
-    {
-      "name": "rafa",
-      "description": "asdasda",
-      "id": 5
-    },
-    {
-      "name": "rafa",
-      "description": "rarawra",
-      "id": 6
-    },
-    {
-      "name": "rafa",
-      "description": "asdasdasda",
-      "id": 7
-    },
-    {
-      "name": "",
-      "description": "",
-      "id": 8
-    },
-    {
-      "name": "",
-      "description": "",
-      "id": 9
-    },
-    {
-      "name": "",
-      "description": "",
-      "id": 10
-    },
-    {
-      "name": "",
-      "description": "",
-      "id": 11
-    },
-    {
-      "name": "",
-      "description": "",
-      "id": 12
     }
   ]
 }

@@ -49,7 +49,7 @@
             <form action="" method="post" id="formulario_producto">
                 <label for="nombre"><b>Nombre:</b></label>
                 <input type="text" name="nombre" required pattern="[a-zA-Z]+" id="nombre_producto"><br><br>
-                <label for="precio"><b>Precio (#,#):</b></label>
+                <label for="precio"><b>Precio :</b></label>
                 <input type="number" name="precio" pattern="[0-9]+([,\.][0-9]+)?" required id="precio_producto"><br><br>
                 <label for="descripcion"><b>Descripción:</b></label>
                 <input type="text" name="descripcion" required pattern="[a-zA-Z]+" id="descripcion_producto"><br><br>
@@ -77,11 +77,11 @@
 
     <!-- SECCIÓN JS -->
     <script>
+        
         function insertar_producto() {
         
             if(document.getElementById("formulario_producto").checkValidity()){
 
-            // Inicializamos las variables
             let nombre_producto = document.getElementById("nombre_producto").value;
             let precio_producto = document.getElementById("precio_producto").value;
             let descripcion_producto = document.getElementById("descripcion_producto").value;
@@ -105,9 +105,12 @@
                 categoryId: categoria_producto,
             }));
 
-            document.location.reload();
+            setTimeout(() => {
+                    document.location.reload();
+                }, 300);
 
             }else alert("Tus campos no cumples los requisitos.");
+            
         }
 
         function insertar_categoria() {
@@ -125,6 +128,10 @@
                 name: document.getElementById("nombre_categoria").value,
                 description: document.getElementById("descripcion_categoria").value,
             }));
+            setTimeout(() => {
+                    document.location.reload();
+                }, 300);
+            
         }
     </script>
 </body>
