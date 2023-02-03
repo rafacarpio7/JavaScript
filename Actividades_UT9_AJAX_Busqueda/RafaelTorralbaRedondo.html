@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+
+
+        .container{
+            display: grid;
+            width: 100vh;
+            height: 100vh;
+            grid-template: 500px 500px/ 500px 500px;
+            grid-auto-flow: column;
+            padding: 25%;
+        }
+
+
+        @import url('https://fonts.googleapis.com/css2?family=Ubuntu:wght@400;500;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300&display=swap');
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    text-decoration: none;
+    
+    
+}
+
+li,a,button {
+    font-family: 'Ubuntu', sans-serif;
+    font-weight: 500;
+    font-size: 16px;
+    color: black;
+    text-decoration: none;
+}
+
+
+h1{
+    text-align: center; 
+    padding-top: 15px; 
+    margin-top: 25px;
+    font-family: 'Roboto';
+    padding-bottom: 25px;
+}
+
+button {
+    margin-left: 40px;
+    padding: 9px 25px;
+    background-color: rgb(223, 235, 156);
+    border: none;
+    border-radius: 50px;
+    cursor: pointer;
+    transition: all 0.3 ease 0s;
+}
+
+button:hover {
+    background-color:burlywood;
+}
+
+body {
+    margin: 0;
+    background: #f5e0d7;
+    font-family: sans-serif;
+    font-weight: 100;
+}
+
+
+
+table {
+    margin: auto;
+    margin-top: 5px;
+    width: 800px;
+    border-collapse: collapse;
+    overflow: hidden;
+    box-shadow: 0 0 20px rgba(0,0,0,0.1);
+
+}
+
+th,td {
+    padding: 15px;
+    background-color: rgba(255,255,255,0.2);
+    color: rgb(0, 0, 0);
+    font-family: 'roboto';
+}
+
+
+
+th {
+    text-align: center;
+    
+}
+
+    th {
+        background-color: #b6e2d3;
+    }
+
+form {
+    width: 400px;
+    background: #b6e2d3;
+    padding-left: 20px;
+    padding-top: 5px;
+    margin: auto;
+    margin-top: 75px;
+    border-radius: 4px;
+
+
+}
+
+input {
+    width: 150px;
+    padding: 7px;
+    border-radius: 4px;
+    margin-bottom: 15px;
+    margin-left: 10px;
+    border: 1px solid #49a09d;
+    font-family: 'Ubuntu', sans-serif;
+}
+
+select{
+    width: 150px;
+    padding: 7px;
+    border-radius: 4px;
+    margin-bottom: 15px;
+    margin-left: 10px;
+    border: 1px solid #49a09d;
+    font-family: 'Ubuntu', sans-serif;
+}
+
+legend {
+    font-size: 22px;
+    margin-bottom: 20px;
+    margin-top: 20px;
+}
+
+.inicio {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    
+}
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="form1">
+            <form id="formProductos" action="">
+                <h1>Formulario Productos</h1>
+                <label for="nombreProducto">Nombre del Producto : </label>
+
+                <select name="nombreProducto" id="nombreProducto" onclick="">
+                    <option value="vacio">-------------</option>
+                  <option value="volvo">Volvo</option>
+                  <option value="saab">Saab</option>
+                  <option value="mercedes">Mercedes</option>
+                  <option value="audi">Audi</option>
+                </select> <br>
+                <label for="limiteInferior">Precio Limite Inferior : </label>
+                <input type="number" name="limiteInferior" id="limiteInferior"><br>
+                <label for="limiteSuperior">Precio Limite Superior : </label>
+                <input type="number" name="limiteSuperior" id="limiteSuperior"><br>
+                <label for="descripcionProducto">Descripcion Producto : </label>
+                <input type="text" name="descripcionProducto" id="descripcionProducto"><br>
+                <label for="categoriaProducto">Categoria del Producto : </label>
+                <select name="categoriaProducto" id="categoriaProducto" onclick="">
+                    <option value="vacio">-------------</option>
+                  <option value="volvo">Volvo</option>
+                  <option value="saab">Saab</option>
+                  <option value="mercedes">Mercedes</option>
+                  <option value="audi">Audi</option>
+                </select><br>
+                <label for="busquedaLibreProducto">Busqueda Libre  :</label>
+                <input type="text" name="busquedaLibreProducto" id="busquedaLibreProducto"><br>
+                <input type="submit" id="btnConsultaProducto" name="btnEnviar" value="Consultar Producto">
+            </form>
+        </div>
+        <div class="tablaproductos">
+
+
+        </div>
+        <div class="form2">
+            <form id="formCategorias" action="">
+                <h1>Formulario Categorias</h1>
+                <label for="nombreCategoria">Nombre de la Categoria : </label>
+
+                <select name="nombreCategoria" id="nombreCategoria" onclick="">
+                    <option value="vacio">-------------</option>
+                  <option value="volvo">Volvo</option>
+                  <option value="saab">Saab</option>
+                  <option value="mercedes">Mercedes</option>
+                  <option value="audi">Audi</option>
+                </select> <br>
+                <label for="descripcionCategoria">Descripcion Categoria : </label>
+                <input type="text" name="descripcionCategoria" id="descripcionCategoria"><br>
+                <label for="busquedaLibreCategoria">Busqueda Libre  :</label>
+                <input type="text" name="busquedaLibreCategoria" id="busquedaLibreCategoria"><br>
+                <input type="submit" id="btnConsultaCategoria" name="btnEnviar" value="Consultar Categoria">
+            </form>
+        </div>
+        <div class="tablaCategorias">
+
+        </div>
+
+    </div>
+    <script>
+        function cargaSelects(params) {
+            
+        }
+    </script>
+</body>
+</html>
