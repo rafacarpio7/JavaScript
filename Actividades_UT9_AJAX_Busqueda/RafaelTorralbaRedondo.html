@@ -14,7 +14,7 @@
             height: 100vh;
             grid-template: 500px 500px/ 500px 500px;
             grid-auto-flow: column;
-            padding: 25%;
+            padding: 15%;
         }
 
 
@@ -150,12 +150,8 @@ legend {
                 <h1>Formulario Productos</h1>
                 <label for="nombreProducto">Nombre del Producto : </label>
 
-                <select name="nombreProducto" id="nombreProducto" onclick="">
-                    <option value="vacio">-------------</option>
-                  <option value="volvo">Volvo</option>
-                  <option value="saab">Saab</option>
-                  <option value="mercedes">Mercedes</option>
-                  <option value="audi">Audi</option>
+                <select name="nombreProducto" id="nombreProducto">
+                  <option value="vacio">-------------</option>
                 </select> <br>
                 <label for="limiteInferior">Precio Limite Inferior : </label>
                 <input type="number" name="limiteInferior" id="limiteInferior"><br>
@@ -166,10 +162,7 @@ legend {
                 <label for="categoriaProducto">Categoria del Producto : </label>
                 <select name="categoriaProducto" id="categoriaProducto" onclick="">
                     <option value="vacio">-------------</option>
-                  <option value="volvo">Volvo</option>
-                  <option value="saab">Saab</option>
-                  <option value="mercedes">Mercedes</option>
-                  <option value="audi">Audi</option>
+
                 </select><br>
                 <label for="busquedaLibreProducto">Busqueda Libre  :</label>
                 <input type="text" name="busquedaLibreProducto" id="busquedaLibreProducto"><br>
@@ -177,6 +170,7 @@ legend {
             </form>
         </div>
         <div class="tablaproductos">
+            <table id="tbody"></table>
 
 
         </div>
@@ -187,27 +181,169 @@ legend {
 
                 <select name="nombreCategoria" id="nombreCategoria" onclick="">
                     <option value="vacio">-------------</option>
-                  <option value="volvo">Volvo</option>
-                  <option value="saab">Saab</option>
-                  <option value="mercedes">Mercedes</option>
-                  <option value="audi">Audi</option>
                 </select> <br>
                 <label for="descripcionCategoria">Descripcion Categoria : </label>
                 <input type="text" name="descripcionCategoria" id="descripcionCategoria"><br>
                 <label for="busquedaLibreCategoria">Busqueda Libre  :</label>
                 <input type="text" name="busquedaLibreCategoria" id="busquedaLibreCategoria"><br>
-                <input type="submit" id="btnConsultaCategoria" name="btnEnviar" value="Consultar Categoria">
+                <input type="submit" id="btnConsultaCategoria" name="btnEnviar" value="Consultar Categoria" onclick="getPosts()">
             </form>
         </div>
         <div class="tablaCategorias">
-
+            <table id="tbodyCategoria"></table>
         </div>
 
     </div>
     <script>
-        function cargaSelects(params) {
-            
+        const selectCategoria = document.getElementById('nombreCategoria');
+        const selectProducto = document.getElementById('nombreProducto');
+        const selectCategoriaProducto = document.getElementById('categoriaProducto');
+        const valorNombreProducto = document.getElementById('nombreProducto').value;
+        const valorLimiteInferior = document.getElementById('limiteSuperior').value;
+        const valorLimiteSuperior = document.getElementById('limiteInferior').value;
+        const valorDescripcionProducto = document.getElementById('descripcionProducto').value;
+
+        const tbody = document.getElementById('tbody');
+
+        function getPostsProducto() {
+        return new Promise((resolve, reject) => {
+            const peticion = new XMLHttpRequest();
+            peticion.open('GET', 'http://localhost:3000/products');
+            peticion.send();
+            peticion.addEventListener('load', () => {
+            if (peticion.status === 200) {
+                resolve(JSON.parse(peticion.responseText));
+            } else {
+                reject("Error " + peticion.status + " (" + peticion.statusText + ") en la petición");
+            }
+            })
+            peticion.addEventListener('error', () => reject('Error en la petición HTTP'));
+        })
         }
+
+        function getPostsProductoFiltro() {
+        return new Promise((resolve, reject) => {
+            const uriFiltro='' ;
+            const peticion = new XMLHttpRequest();
+
+            if (valorNombreProducto!='vacio') {
+                uriFiltro+='name='+valorNombreProducto;
+            }
+            if (valorLimiteInferior!='') {
+                uriFiltro+='precio_lte='+valorLimiteInferior;
+            }
+            if (valorLimiteSuperior!='') {
+                uriFiltro+='precio_gte='+valorLimiteSuperior;
+            } 
+            if (valorDescripcionProducto!='') {
+                uriFiltro+='description='+valorLimiteSuperior
+            }
+
+            peticion.open('GET', 'http://localhost:3000/products'+'?'+nombreProdcutoFiltro);
+            peticion.send();
+            peticion.addEventListener('load', () => {
+            if (peticion.status === 200) {
+                resolve(JSON.parse(peticion.responseText));
+            } else {
+                reject("Error " + peticion.status + " (" + peticion.statusText + ") en la petición");
+            }
+            })
+            peticion.addEventListener('error', () => reject('Error en la petición HTTP'));
+        })
+        }
+        
+        function getPostsCategoria() {
+        return new Promise((resolve, reject) => {
+            const peticion = new XMLHttpRequest();
+            peticion.open('GET', 'http://localhost:3000/categories');
+            peticion.send();
+            peticion.addEventListener('load', () => {
+            if (peticion.status === 200) {
+                resolve(JSON.parse(peticion.responseText));
+            } else {
+                reject("Error " + peticion.status + " (" + peticion.statusText + ") en la petición");
+            }
+            })
+            peticion.addEventListener('error', () => reject('Error en la petición HTTP'));
+        })
+        }
+
+        getPostsProducto()
+        .then((posts) => {
+          posts.forEach((post) => {
+            const newPost = document.createElement('option');
+            newPost.setAttribute('value',`${post.name}`);
+            newPost.innerHTML = `${post.name}`
+            selectProducto.appendChild(newPost);
+          })
+          document.getElementById('num-posts').textContent = posts.length;
+        })
+        .catch((error) => console.error(error))
+
+        getPostsCategoria()
+        .then((posts) => {
+          posts.forEach((post) => {
+            const newPost = document.createElement('option');
+            newPost.setAttribute('value',`${post.name}`);
+            newPost.innerHTML = `${post.name}`
+            selectCategoria.appendChild(newPost);
+          })
+          document.getElementById('num-posts').textContent = posts.length;
+        })
+        .catch((error) => console.error(error))
+
+        getPostsCategoria()
+        .then((posts) => {
+          posts.forEach((post) => {
+            const newPost = document.createElement('option');
+            newPost.setAttribute('value',`${post.name}`);
+            newPost.innerHTML = `${post.name}`
+            selectCategoriaProducto.appendChild(newPost);
+          })
+          document.getElementById('num-posts').textContent = posts.length;
+        })
+        .catch((error) => console.error(error))
+
+
+        getPostsProducto()
+        .then(function(posts) {
+          tbody.innerHTML = '' // borramos el contenido de la tabla
+          posts.forEach(post => {
+            const newPost = document.createElement('tr')
+            newPost.innerHTML = `
+                <td>${post.name}</td>
+                <td>${post.price}</td>`
+            tbody.appendChild(newPost)
+          })
+          document.getElementById('num-posts').textContent = posts.length
+        })
+        .catch(function(error) {
+          console.error(error)
+        })
+
+        getPostsCategoria()
+        .then(function(posts) {
+            tbodyCategoria.innerHTML = '' // borramos el contenido de la tabla
+          posts.forEach(post => {
+            const newPost = document.createElement('tr')
+            newPost.innerHTML = `
+                <td>${post.name}</td>
+                <td>${post.id}</td>
+                <td>${post.description}</td>`
+                tbodyCategoria.appendChild(newPost)
+          })
+          document.getElementById('num-posts').textContent = posts.length
+        })
+        .catch(function(error) {
+          console.error(error)
+        })
+
+
+
+
+        //http://localhost:3000/products?price_lte=400
+
+
     </script>
 </body>
 </html>
