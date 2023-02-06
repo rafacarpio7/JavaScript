@@ -84,9 +84,13 @@ th,td {
     background-color: rgba(255,255,255,0.2);
     color: rgb(0, 0, 0);
     font-family: 'roboto';
+
 }
 
-
+tr{
+    width: 200px;
+    height: 50px;
+}
 
 th {
     text-align: center;
@@ -166,7 +170,7 @@ legend {
                 </select><br>
                 <label for="busquedaLibreProducto">Busqueda Libre  :</label>
                 <input type="text" name="busquedaLibreProducto" id="busquedaLibreProducto"><br>
-                <input type="submit" id="btnConsultaProducto" name="btnEnviar" value="Consultar Producto">
+                <input type="button" id="btnConsultaProducto" name="btnEnviar" value="Consultar Producto" onclick="getPostsProductoFiltro()">
             </form>
         </div>
         <div class="tablaproductos">
@@ -186,7 +190,7 @@ legend {
                 <input type="text" name="descripcionCategoria" id="descripcionCategoria"><br>
                 <label for="busquedaLibreCategoria">Busqueda Libre  :</label>
                 <input type="text" name="busquedaLibreCategoria" id="busquedaLibreCategoria"><br>
-                <input type="submit" id="btnConsultaCategoria" name="btnEnviar" value="Consultar Categoria" onclick="getPosts()">
+                <input type="button" id="btnConsultaCategoria" name="btnEnviar" value="Consultar Categoria" onclick="getPosts()">
             </form>
         </div>
         <div class="tablaCategorias">
@@ -198,13 +202,14 @@ legend {
         const selectCategoria = document.getElementById('nombreCategoria');
         const selectProducto = document.getElementById('nombreProducto');
         const selectCategoriaProducto = document.getElementById('categoriaProducto');
-        const valorNombreProducto = document.getElementById('nombreProducto').value;
-        const valorLimiteInferior = document.getElementById('limiteSuperior').value;
-        const valorLimiteSuperior = document.getElementById('limiteInferior').value;
-        const valorDescripcionProducto = document.getElementById('descripcionProducto').value;
 
+
+        
+
+        const formProductos= document.getElementById('formProductos');
         const tbody = document.getElementById('tbody');
 
+        
         function getPostsProducto() {
         return new Promise((resolve, reject) => {
             const peticion = new XMLHttpRequest();
@@ -223,23 +228,29 @@ legend {
 
         function getPostsProductoFiltro() {
         return new Promise((resolve, reject) => {
-            const uriFiltro='' ;
+            const valorNombreProducto = document.getElementById('nombreProducto').value;
+        const valorLimiteInferior = document.getElementById('limiteInferior').value;
+        const valorLimiteSuperior = document.getElementById('limiteSuperior').value;
+        const valorDescripcionProducto = document.getElementById('descripcionProducto').value;
+            let uriFiltro='' ;
             const peticion = new XMLHttpRequest();
 
-            if (valorNombreProducto!='vacio') {
-                uriFiltro+='name='+valorNombreProducto;
+            if (valorNombreProducto!=null) {
+                uriFiltro+='name='+valorNombreProducto+'&';
             }
-            if (valorLimiteInferior!='') {
-                uriFiltro+='precio_lte='+valorLimiteInferior;
+            if (valorLimiteInferior!=null) {
+                uriFiltro+='price_lte='+valorLimiteInferior+'&';
             }
-            if (valorLimiteSuperior!='') {
-                uriFiltro+='precio_gte='+valorLimiteSuperior;
+            if (valorLimiteSuperior!==null) {
+                uriFiltro+='price_gte='+valorLimiteSuperior+'&';
             } 
             if (valorDescripcionProducto!='') {
-                uriFiltro+='description='+valorLimiteSuperior
+                uriFiltro+='description_eq='+valorDescripcionProducto;
             }
+            console.log(uriFiltro);
 
-            peticion.open('GET', 'http://localhost:3000/products'+'?'+nombreProdcutoFiltro);
+            peticion.open('GET', 'http://localhost:3000/products'+'?'+uriFiltro);
+            console.log(peticion);
             peticion.send();
             peticion.addEventListener('load', () => {
             if (peticion.status === 200) {
@@ -305,38 +316,44 @@ legend {
         .catch((error) => console.error(error))
 
 
-        getPostsProducto()
-        .then(function(posts) {
-          tbody.innerHTML = '' // borramos el contenido de la tabla
-          posts.forEach(post => {
+        document.getElementById('btnConsultaProducto').addEventListener('click',function prueba(params) {
+            getPostsProductoFiltro().then((getPostsProductoFiltro)=>{
+          tbody.innerHTML = '' ;
+          console.log(getPostsProductoFiltro);
+          getPostsProductoFiltro.forEach(getPostsProductoFiltro => {
             const newPost = document.createElement('tr')
             newPost.innerHTML = `
-                <td>${post.name}</td>
-                <td>${post.price}</td>`
+                <td>${getPostsProductoFiltro.id}</td>
+                <td>${getPostsProductoFiltro.name}</td>
+                <td>${getPostsProductoFiltro.price}</td>
+                <td>${getPostsProductoFiltro.description}</td>`
             tbody.appendChild(newPost)
           })
-          document.getElementById('num-posts').textContent = posts.length
+          document.getElementById('num-posts').textContent = getPostsProductoFiltro.length
         })
         .catch(function(error) {
           console.error(error)
         })
+        })
+        
+        
 
-        getPostsCategoria()
-        .then(function(posts) {
-            tbodyCategoria.innerHTML = '' // borramos el contenido de la tabla
-          posts.forEach(post => {
-            const newPost = document.createElement('tr')
-            newPost.innerHTML = `
-                <td>${post.name}</td>
-                <td>${post.id}</td>
-                <td>${post.description}</td>`
-                tbodyCategoria.appendChild(newPost)
-          })
-          document.getElementById('num-posts').textContent = posts.length
-        })
-        .catch(function(error) {
-          console.error(error)
-        })
+        // getPostsCategoria()
+        // .then(function(posts) {
+        //     tbodyCategoria.innerHTML = '' // borramos el contenido de la tabla
+        //   posts.forEach(post => {
+        //     const newPost = document.createElement('tr')
+        //     newPost.innerHTML = `
+        //         <td>${post.name}</td>
+        //         <td>${post.id}</td>
+        //         <td>${post.description}</td>`
+        //         tbodyCategoria.appendChild(newPost)
+        //   })
+        //   document.getElementById('num-posts').textContent = posts.length
+        // })
+        // .catch(function(error) {
+        //   console.error(error)
+        // })
 
 
 
