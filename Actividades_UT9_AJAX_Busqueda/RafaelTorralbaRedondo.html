@@ -229,24 +229,27 @@ legend {
         function getPostsProductoFiltro() {
         return new Promise((resolve, reject) => {
             const valorNombreProducto = document.getElementById('nombreProducto').value;
-        const valorLimiteInferior = document.getElementById('limiteInferior').value;
-        const valorLimiteSuperior = document.getElementById('limiteSuperior').value;
-        const valorDescripcionProducto = document.getElementById('descripcionProducto').value;
+            const valorLimiteInferior = document.getElementById('limiteInferior').value;
+            const valorLimiteSuperior = document.getElementById('limiteSuperior').value;
+            const valorDescripcionProducto = document.getElementById('descripcionProducto').value;
+            const valorCategoriaProducto = document.getElementById('categoriaProducto').value;
             let uriFiltro='' ;
+
             const peticion = new XMLHttpRequest();
 
-            if (valorNombreProducto!=null) {
+            if (valorNombreProducto!='vacio') {
                 uriFiltro+='name='+valorNombreProducto+'&';
             }
-            if (valorLimiteInferior!=null) {
-                uriFiltro+='price_lte='+valorLimiteInferior+'&';
+            if (valorLimiteInferior != '') {
+                uriFiltro+='price_gte='+valorLimiteInferior+'&';
             }
-            if (valorLimiteSuperior!==null) {
-                uriFiltro+='price_gte='+valorLimiteSuperior+'&';
+            if (valorLimiteSuperior!='') {
+                uriFiltro+='price_lte='+valorLimiteSuperior+'&';
             } 
             if (valorDescripcionProducto!='') {
-                uriFiltro+='description_eq='+valorDescripcionProducto;
+                uriFiltro+='description='+valorDescripcionProducto+'&';
             }
+
             console.log(uriFiltro);
 
             peticion.open('GET', 'http://localhost:3000/products'+'?'+uriFiltro);
@@ -295,7 +298,7 @@ legend {
         .then((posts) => {
           posts.forEach((post) => {
             const newPost = document.createElement('option');
-            newPost.setAttribute('value',`${post.name}`);
+            newPost.setAttribute('value',`${post.id}`);
             newPost.innerHTML = `${post.name}`
             selectCategoria.appendChild(newPost);
           })
@@ -307,7 +310,7 @@ legend {
         .then((posts) => {
           posts.forEach((post) => {
             const newPost = document.createElement('option');
-            newPost.setAttribute('value',`${post.name}`);
+            newPost.setAttribute('value',`${post.id}`);
             newPost.innerHTML = `${post.name}`
             selectCategoriaProducto.appendChild(newPost);
           })
@@ -322,11 +325,24 @@ legend {
           console.log(getPostsProductoFiltro);
           getPostsProductoFiltro.forEach(getPostsProductoFiltro => {
             const newPost = document.createElement('tr')
-            newPost.innerHTML = `
-                <td>${getPostsProductoFiltro.id}</td>
-                <td>${getPostsProductoFiltro.name}</td>
-                <td>${getPostsProductoFiltro.price}</td>
-                <td>${getPostsProductoFiltro.description}</td>`
+            
+                getPostsCategoria()
+                    .then((posts) => {
+                    posts.forEach((post) => {
+                        if (post.id==getPostsProductoFiltro.categoryId) {
+                            newPost.innerHTML = `
+                        <td>${getPostsProductoFiltro.id}</td>
+                        <td>${getPostsProductoFiltro.name}</td>
+                        <td>${getPostsProductoFiltro.price}</td>
+                        <td>${getPostsProductoFiltro.description}</td>
+                        <td>${posts.name}</td>`
+
+                            
+                        } else {
+                            
+                        }
+                    })
+                    })
             tbody.appendChild(newPost)
           })
           document.getElementById('num-posts').textContent = getPostsProductoFiltro.length
