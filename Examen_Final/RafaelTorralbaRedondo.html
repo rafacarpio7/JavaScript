@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <form id="formulario" action="" method="">
+        Correo electronico <br>
+        <input type="email" placeholder="user@gmail.com" name="correoLogin" id="correoLogin" required><br>
+        Contraseña <br>
+        <input type="password" name="contraseñaLogin" id="contraseñaLogin" minlength="8" required><br>
+        <input type="checkbox" name="mostrarContraseña" id="mostrarContraseña">Mostrar Contraseña <br>
+        <input type="button" id="btnEntrar" value="Entrar" onclick="compruebaeInserta()">
+
+
+    </form>
+
+    <script>
+        const formulario = document.getElementById('formulario');
+        const email = document.getElementById('correoLogin');
+        const contraseña = document.getElementById('contraseñaLogin');
+        const checkbox = document.getElementById('mostrarContraseña');
+        const entrar = document.getElementById('btnEntrar');
+
+        // entrar.addEventListener('submit', (event)=> {
+        //     let checkear = false ;
+        //     let chekerarEmail = false;
+        //     let checkearContraseña = false;
+
+        //     if (checkear == false) {
+                
+                    
+        //             if (!email.checkValidity()) {
+        //                 if (email.validity.valueMissing) {
+        //                     event.preventDefault();
+        //                 }else if(email.validity.typeMismatch){
+        //                     event.preventDefault();
+        //                 }
+        //             }else{
+        //                 chekerarEmail = true ;
+        //                 event.preventDefault();
+        //             }
+
+        //             if (!contraseña.checkValidity()) {
+        //                 if (contraseña.validity.valueMissing) {
+        //                     event.preventDefault();
+        //                 } else if(contraseña.validity.tooShort){
+        //                     event.preventDefault();
+        //                 }
+                        
+        //             }else {
+        //                 checkearContraseña = true ;
+        //                 event.preventDefault();
+        //             }
+        //         if (checkearContraseña== true && chekerarEmail==true) {
+        //             checkear=true;
+        //             event.preventDefault();
+        //         }
+
+        //     } else {
+                
+        //     }
+        // });
+
+        function compruebaeInserta() {
+            getPostsUser()
+                .then((posts) => {
+                posts.forEach((postUsers) => {
+                        if (postUsers.email == email.value && postUsers.pass == contraseña.value) {
+                            let fechaHoy = new Date();
+                            let nuevaVentana=window.open("bienvenida.html", "Bienvenida", "width=500, height=200");
+                            nuevaVentana.document.write("<h1>Bienvenido o bienvenida</h1><br>");
+                            nuevaVentana.document.write("<h1>"+fechaHoy.toLocaleDateString()+','+fechaHoy.toLocaleTimeString()+"</h1>");
+                            insertarAcceso();
+                            console.log()
+                        } else {
+                            alert("Usuario y/o contraseña no válidos");
+                        }
+                })
+                })
+                .catch((error) => console.error(error))
+        }
+
+        checkbox.addEventListener('change',(event) => {
+
+            if (checkbox.checked == true) {
+                contraseña.setAttribute('type','text');
+            } else {
+                contraseña.setAttribute('type','password');
+            }
+
+        })
+
+        function getPostsUser() {
+        return new Promise((resolve, reject) => {
+            const peticion = new XMLHttpRequest();
+            peticion.open('GET', 'http://localhost:3000/users');
+            peticion.send();
+            peticion.addEventListener('load', () => {
+            if (peticion.status === 200) {
+                resolve(JSON.parse(peticion.responseText));
+            } else {
+                reject("Error " + peticion.status + " (" + peticion.statusText + ") en la petición");
+            }
+            })
+            peticion.addEventListener('error', () => reject('Error en la petición HTTP'));
+        })
+        }
+
+        function getPostsAccess() {
+        return new Promise((resolve, reject) => {
+            const peticion = new XMLHttpRequest();
+            peticion.open('GET', 'http://localhost:3000/access');
+            peticion.send();
+            peticion.addEventListener('load', () => {
+            if (peticion.status === 200) {
+                resolve(JSON.parse(peticion.responseText));
+            } else {
+                reject("Error " + peticion.status + " (" + peticion.statusText + ") en la petición");
+            }
+            })
+            peticion.addEventListener('error', () => reject('Error en la petición HTTP'));
+        })
+        }
+
+
+
+        function insertarAcceso() {
+
+        let fechaHoy = new Date();
+        const peticion = new XMLHttpRequest();
+        peticion.open('POST', 'http://localhost:3000/access');
+
+        peticion.setRequestHeader('Content-Type', 'application/json');
+
+        peticion.onload = () => {
+            const data = JSON.parse(peticion.response);
+            console.log(data);
+        };
+
+        peticion.send(JSON.stringify({
+            email: email.value,
+            date: fechaHoy.toLocaleDateString()+','+fechaHoy.toLocaleTimeString()
+        }));
+
+    }
+
+        
+            
+        
+
+
+
+    </script>
+    
+</body>
+</html>
