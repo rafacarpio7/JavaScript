@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        input:invalid {
+      border: 2px dashed red;
+
+    }
+
+    input:valid {
+      border: 2px dashed green;
+
+    }
+    </style>
+</head>
+<body>
+<!-- 1. Confeccionar un formulario que nos solicite la carga obligatoria de un -->
+<!-- número binario de ocho dígitos. -->
+    <h2>Ejercicio 1</h2>
+  <p>Introduce un número binario de 8 dígitos</p>
+  <form>
+    <input type="text" pattern="[0-1]{8}" required>
+    <button id="btn" > enviar</button>
+  </form>
+  
+</body>
+</html>

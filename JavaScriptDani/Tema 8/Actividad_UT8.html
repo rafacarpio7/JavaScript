@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <title>Form validation: Task 1</title>
+  <style>
+    body {
+      background-color: #fff;
+      color: #333;
+      font: 1em / 1.4 Helvetica Neue, Helvetica, Arial, sans-serif;
+      padding: 1em;
+      margin: 0;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    input:invalid {
+      border: 2px dashed red;
+
+    }
+
+    input:valid {
+      border: 2px dashed green;
+
+    }
+
+    #imgPreview {
+      width: 100px;
+      height: 100px;
+    }
+  </style>
+</head>
+
+<body>
+
+  <h2>Ejercicio 1</h2>
+  <p>Introduce un número binario de 8 dígitos</p>
+  <input type="text" pattern="[0-1]{8}" required>
+
+
+  <h2>Ejercicio 2</h2>
+  <p>Crear cuenta en red social</p>
+  <form>
+    <label for="nombre">Nombre</label>
+    <input name="nombre" type="text" minlength="3" maxlength="20" required>
+    <br>
+    <label for="apellido">Apellido</label>
+    <input name="apellido" type="text" minlength="4" maxlength="40" required>
+    <br>
+    <label for="usuario">Usuario</label>
+    <input name="usuario" type="text" minlength="7" pattern="[AZ-az-09]" required>
+    <br>
+    <label for="correo">Correo</label>
+    <input name="correo" type="email" required>
+    <br>
+    <label for="telefono">Telefono</label>
+    <input name="telefono" type="text" pattern="[0-9]{9}" required>
+    <br>
+    <label for="fecha">Fecha de Nacimiento</label>
+    <input name="fecha" type="date" min="1930-01-01" max=`(date.now()) ` required>
+    <div class="fechaMayor"></div>
+
+
+    <p>Marca tus intereses(mínimo2)</p>
+
+    <input type="checkbox" name="checkbox">
+    <label for="cbox1">Ciencia</label>
+    <input type="checkbox" name="checkbox">
+    <label for="cbox2">Tecnología</label>
+    <input type="checkbox" name="checkbox">
+    <label for="cbox3">Matemáticas</label>
+    <input type="checkbox" name="checkbox">
+    <label for="cbox4">Deportes</label>
+    <input type="checkbox" name="checkbox">
+    <label for="cbox5" name="checkbox">Cine</label>
+    <BR>
+    <input type="file" accept="image/*" onchange="previewImage(event, '#imgPreview')">
+    <BR>
+    <button id="btn" disabled> enviar</button>
+    <BR>
+    <img id="imgPreview">
+
+    <script>
+      'use strict'
+      function previewImage(event, querySelector) {
+        //Recuperamos el input que desencadeno la acción
+        const input = event.target;
+
+        //Recuperamos la etiqueta img donde cargaremos la imagen
+        var imgPreview = document.querySelector(querySelector);
+
+        // Verificamos si existe una imagen seleccionada
+        if (!input.files.length) return
+
+        //Recuperamos el archivo subido
+        var file = input.files[0];
+
+        //Creamos la url
+        var objectURL = URL.createObjectURL(file);
+
+        //Modificamos el atributo src de la etiqueta img
+        imgPreview.src = objectURL;
+
+      }
+
+
+      //COMPROBACION DE MINIMO 2 CHECKBOX
+
+      let checkbox = document.getElementsByName("checkbox");
+      let button = document.getElementById("btn");
+      let contador = 0;
+//AÑADIMOS UN LISTENER A CADA OPCION DEL CHECKBOX:
+      for (let i = 0; i < checkbox.length; i++) {
+
+        checkbox[i].addEventListener("change", () => {
+
+          //DESABILITAMOS EL BOTÓN DE ENVÍO 
+          button.disabled = true;
+
+          if (checkbox[i].checked == true) {
+            contador++;
+            //console.log("contador", contador);
+          } else {
+            contador--;
+            //console.log("contador", contador);
+          }
+          
+          if (contador >= 2) {
+            //SI ESTÁN MARCADOS 2 CHECKBOX HABILITAMOS EL BOTÓN DE ENVÍO
+            button.disabled = false;
+          }
+        });
+      }
+
+
+
+      //PROHIBIR ELEGIR FECHA MAS DE LA ACTUAL:
+      var today = new Date().toISOString().split('T')[0];
+      document.getElementsByName("fecha")[0].setAttribute('max', today);
+      //--------------------------------------------------------------------------
+
+      //SABER SI ES MAYOR DE EDAD:
+      var data = document.querySelector('input[name="fecha"]');
+      data.addEventListener('blur', () => {
+        //RECOGEMOS EL NUMERO TOTAL DE DIAS DEL DIA EN CURSO
+        let fechaActual = new Date();
+        let añoActual = fechaActual.getFullYear() * 365;
+        let mesActual = fechaActual.getMonth() + 30;
+        let diaActual = fechaActual.getDate();
+        let totalDiasActual = añoActual + mesActual + diaActual;
+        //CALCULAMOS EL NUMERO DE DIAS NECESARIOS PARA SER MAYOR DE EDAD
+        let mayorEdad = 18 * 365;
+        //rECOGEMOS LA FECHA DEL INPUT Y LO PASAMOS A DIAS
+        let fechaNacimiento = new Date(data.value);
+        let añoNacimiento = fechaNacimiento.getFullYear() * 365;
+        let mesNacimiento = (fechaNacimiento.getUTCMonth()) * 30;
+        let diaNacimiento = fechaNacimiento.getDate();
+        let totalDiasNacimiento = añoNacimiento + mesNacimiento + diaNacimiento;
+        //CALCULAMOS LA DIFERENCIA ENTRE LOS DIAS DEL NACIMIENTO Y EL ACTUAL
+        let diferenciaDias = totalDiasActual - totalDiasNacimiento - 30;
+
+        //COMPROBAMOS SI ES MAYOR DE EDAD
+        if (diferenciaDias >= mayorEdad) {
+          let prueba = document.querySelector(".fechaMayor");
+          prueba.innerHTML = "<STRONG>Eres mayor de edad :)</STRONG>";
+
+        } else {
+          //borramos el mensaje anterior si es ue existia anteriormente
+          let prueba = document.querySelector(".fechaMayor");
+          prueba.innerHTML = "";
+
+          //Creamos la alerta
+          alert("NO ERES MAYOR DE EDAD");
+          //borramos el campo de la fecha para que no se pueda enviar el formulario
+          data.value = "";
+        }
+
+      })
+      
+
+      docume.addEventListener("input:invalid")('change',() =>{
+        document.write("pepe");
+      })
+    </script>
+
+
+  </form>
+
+
+  <form>
+    <h2>Enter your support query</h2>
+    <ul>
+      <li>
+        <label for="uname">User name:</label>
+        <input type="text" name="uname" id="uname">
+      </li>
+      <li>
+        <label for="email">Email address:</label>
+        <input type="text" name="email" id="email">
+      </li>
+      <li>
+        <label for="phone">Phone number:</label>
+        <input type="text" name="phone" id="phone">
+      </li>
+      <li>
+        <label for="comment">Comment:</label>
+        <textarea name="comment" id="comment">
+          </textarea>
+      </li>
+      <li>
+        <button>Submit comment</button>
+      </li>
+    </ul>
+  </form>
+</body>
+
+</html>

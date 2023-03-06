@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+
+/*1. Crea dos variables fecNac1 y fecNac2 que contengan tu fecha de nacimiento. 
+La primera la creas pasándole una cadena y la segunda pasándole año, mes y día. */
+let usuarioDia=prompt('Introduce tu día de nacimiento');
+let numerousuariodia=parseInt(usuarioDia);
+
+let usuarioMes=prompt('Ahora tu mes de nacimiento en formato 00');
+let numerousuariomes=parseInt(usuarioMes)-1;
+
+let usuarioAño=prompt('Por ultimo di año de nacimiento en formato 0000');
+let numerousuarioaño=parseInt(usuarioAño);
+
+
+let fecNac1=new Date(numerousuarioaño,numerousuariomes,numerousuariodia);
+
+
+/*2. Usando la variable fecNac1 del ejercicio anterior: 
+•	Muestra el día de la semana en que naciste.                                                   
+*/
+
+let dia= fecNac1.getDay();
+let mesGuardado=fecNac1.getFullYear()
+// document.write('</br>AAAAAAA ', mesGuardado);
+
+//EL DOMINGO ES 0, NUNCA VA A DAR 7 
+function diaSemana (dia){
+switch (dia) {
+    case 1:
+    document.write('Lunes');
+        break;
+    case 2:
+    document.write('Martes');
+        break;
+    case 3:
+    document.write('Miércoles');
+        break;
+    case 4:
+    document.write('Jueves');
+        break;
+    case 5:
+    document.write('Viernes');
+        break;
+    case 6:
+    document.write('Sábado');
+        break;
+    case 7:
+    document.write('Domingo');
+        break;
+
+    }
+}
+document.write('Has nacidio el día de la semana: ');
+diaSemana(dia);
+
+/*2. Usando la variable fecNac1 del ejercicio anterior:                                                    
+•	Modifica fecNac1 para que contenga la fecha de tu cumpleaños de este año (cambia sólo el año).
+*/
+fecNac1.setFullYear(2023);
+let dia2= fecNac1.getDay();
+
+/*2. Usando la variable fecNac1 del ejercicio anterior: 
+•	Muestra el día de la semana de tu cumpleaños de este año.
+*/
+document.write('</br>Fecha de año cambiada es: ',fecNac1.getFullYear(),' con el día: ');
+diaSemana(dia2);
+
+/*2. Usando la variable fecNac1 del ejercicio anterior: 
+•	Calcula el nº de días que han pasado desde que naciste hasta hoy.
+*/
+
+fecNac1.setFullYear(mesGuardado);
+// document.write('</br>PPPPPPPPPP   ',fecNac1);
+
+function diasPasados (fecNac1){
+    var hoy = new Date();
+
+    let año22=hoy.getFullYear();
+    let mes22=hoy.getMonth();
+    let dias22=hoy.getDay();
+    let añosDiferencia= año22-fecNac1.getFullYear();
+
+    let mesesDiferencia= mes22-fecNac1.getMonth();
+
+    let diasDiferencia;
+        if(dias22>fecNac1.getDate()){
+            diasDiferencia= dias22-fecNac1.getDate();
+            
+        }else{
+            diasDiferencia= fecNac1.getDate()-dias22;
+            
+        }
+
+    let resultado = (añosDiferencia*365) + (mesesDiferencia*30) + (diasDiferencia);
+    return resultado;
+}
+document.write('</br>Han pasado ', diasPasados(fecNac1), ' días desde que naciste');
+
+/*3. Muestra en al menos 5 formatos distintos la fecha y la hora de hoy.*/
+
+let formato=new Date();
+document.write('</br></br>Cinco tipos de formato de fecha:');
+document.write('</br>',formato.toString());
+document.write('</br>',formato.toDateString());
+document.write('</br>',formato.toLocaleString());
+document.write('</br>',formato.toGMTString());
+document.write('</br>',formato.toISOString());
+
+
+/*4. Comprueba si es mayor tu fecha de nacimiento o el 1 de enero de este año*/
+function fechaMayor(fecha1,fecha2){
+    let diasfecha1=diasPasados(fecha1);
+    let diasfecha2=diasPasados(fecha2);
+    if(diasfecha1>diasfecha2){
+        return fecha1.toDateString() + ' es mayor que '+ fecha2.toDateString();
+    }else {
+        return fecha2.toDateString() + ' es mayor que '+ fecha1.toDateString();
+    }
+}
+
+let unoEnero2022= new Date(2022,00,01)
+document.write('</br></br>Comprobación de fecha:');
+document.write('</br>',fechaMayor(fecNac1,unoEnero2022));
+    </script>
+</body>
+</html>

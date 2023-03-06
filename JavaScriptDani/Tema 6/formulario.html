@@ -1,0 +1,352 @@
+<img src="formulario.jpg">
+<h1>Formulario</h1>
+<p><b>Completa el siguiente formulario</b></p>
+<form><!-- action="ejemplo.php" method="get">-->
+  <p>Nombre: <input type="text" name="nombre" size="40"></p>
+  <p>Apellidos:
+  <input type="text" name="apellidos" size="40" placeholder="Escriba sus dos apellidos">
+  </p>
+  <p>A�o de nacimiento: <input type="number" name="nacido" min="1900"></p>
+  <p>Nacionalidad: 
+  <SELECT NAME="lista1">
+  <OPTION>
+  <OPTION>Espa�ola
+  <OPTION>Alemana
+  <OPTION>Francesa
+  </SELECT>
+  </p>
+  <p>Sexo:
+    <input type="radio" name="hm" value="h"> Hombre
+    <input type="radio" name="hm" value="m"> Mujer
+  </p>
+  <p>Deportes favoritos:
+  <input type="checkbox" name="casilla1">futbol
+  <input type="checkbox" name="casilla2">baloncesto
+  <input type="checkbox" name="casilla3">atletismo
+  </p>
+  <p>Comentarios:
+  <textarea id="texto"></textarea>
+  </p>
+  <p>
+    <!--<input type="submit" id="button1" value="Enviar">
+     <input type="reset" id="button2" value="Borrar">
+    -->
+    <input type="button" id="button1" value="Enviar">
+    <input type="button" id="button2" value="Borrar">
+    <input type="button" id="button3" value="Click me">
+    <input type="button" id="button4" value="Tema Oscuro">
+  
+  </p>
+
+  <script>
+//Tema oscuro Tema Claro
+document.getElementById('button4').addEventListener('click', ()=>{
+document.querySelector('body').style.color='black';
+
+})
+
+  // Ejercicio 1. Cada vez que el ratón este sobre la imagen auméntala a 
+  //60px (debe volver a su tamaño original cuando el ratón no esté sobre la imagen).
+  var imagen = document.querySelector('img');
+  var imagen1=new Image( src="formulario.jpg",'width=60px', 'height=60px');
+  imagen1.width=imagen.width;
+  imagen1.height=imagen.height;
+
+  document.querySelector('img').addEventListener("mouseenter", (event) => 
+    {
+      imagen.style.width = '60px';
+      imagen.style.height= '60px';
+     
+    });
+
+    document.querySelector('img').addEventListener("mouseleave", (event) => 
+    {
+      imagen.style.width='39';
+      imagen.style.height='39';
+     
+    });
+
+    //Ejercicio 2. Cuando se haga doble click en el primer párrafo (“Completa el siguiente formulario”), 
+    //cambia el color del texto de la cabecera (h1) a azul.
+
+    document.querySelector('p').addEventListener('click', (event)=>
+    {
+      var x= event.detail;
+      if (x==2){
+        document.querySelector('h1').style.color='blue';
+      }
+    });
+
+
+    //Ejercicio 3 3. Después de escribir el Nombre y perder el foco en este campo transforma todos los 
+    //caracteres del nombre a mayúsculas.
+    document.querySelector('p > input').addEventListener('blur', (event)=>{
+      document.querySelector('p > input').value=document.querySelector('p > input').value.toUpperCase();
+  
+    })
+
+    //Ejercicio 4. Cuando se complete cada campo de texto, debe poner la etiqueta que le precede de 
+    //color rojo y en negrita. Ejemplo:
+    document.querySelector('p > input').addEventListener('change', (event)=> {
+      document.querySelector('p > input').parentElement.style.color='red';
+    })
+
+    document.querySelector('p:nth-child(2) > input').addEventListener('change', (event)=>{
+      document.querySelector('p:nth-child(2) > input').parentElement.style.color='red';
+    })
+
+    document.querySelector('p > textarea').addEventListener('change', (event)=>{
+      document.querySelector('p > textarea').parentElement.style.color='red';
+    })
+
+    //Ejercicio 5. Después de introducir los apellidos comprueba que no haya introducido algún 
+    //carácter especial. En caso de haber introducido algún carácter borra el campo Apellidos.
+    let ape = document.querySelector('p:nth-child(2) > input');
+    let espe = '[!"·$%&/()=?¿]';
+    ape.addEventListener('change',(event)=>{
+    
+    console.log(ape.value.includes(espe));
+    if((ape.value).match('[!"·$%&/()=?¿Ññ]') ){
+    ape.value = ' ';
+    }});
+
+
+    //Ejercicio 6. Después de introducir el año de nacimiento y cada vez que se cambie este dato, 
+    //escribe (o reescribe en caso de modificarse el año) un texto (añade un DIV o un P al HTML)
+    //que indique si nació en año bisiesto o no y los años que tiene. Sitúa este texto a continuación 
+    //del Año de nacimiento.
+    
+
+
+
+    document.querySelector('[min]').addEventListener('change', (event)=>{
+      var esBisiesto = (year) => {
+  return (year % 400 === 0) ? true : 
+  			(year % 100 === 0) ? false : 
+  				year % 4 === 0;}
+
+          var miDiv=document.querySelector('p:nth-child(2)');
+          var nuevoParrafo=document.createElement('p');
+          var textoBisiesto=document.createTextNode('Es año bisiesto');
+          var textoNoBisiesto=document.createTextNode('NO es año bisiesto');
+         
+
+          var valor =document.querySelector('[min]').value;
+          if(esBisiesto(document.querySelector('[min]').value)){
+            nuevoParrafo.appendChild(textoBisiesto);
+            miDiv.appendChild(nuevoParrafo);
+        console.log('esBisiesto');
+      }else{
+        nuevoParrafo.appendChild(textoNoBisiesto);
+        miDiv.appendChild(nuevoParrafo);
+        console.log('NO');
+      }
+    });
+
+    //Ejercicio 7. Cuando selecciones una nacionalidad muestra una alerta indicando 
+    //la nacionalidad seleccionada.
+
+    let seleccion=document.querySelector('select');
+
+    seleccion.addEventListener('change',function() {
+      var opcion = seleccion.options[seleccion.selectedIndex];
+      alert(opcion.innerHTML);
+    });
+      
+
+
+    //Ejercicio 8. Al cambiar el valor de algún checkbox o la selección del sexo 
+    // escribe (o reescribe en caso de volver a cambiarlo) un texto (añade un DIV o 
+    // un P al HTML) que indique cuantos cambios se han realizado sobre estos elementos. 
+    // Sitúa este texto antes de Comentarios.
+    let cambios=0;
+    // let nuevoParrafo1= document.createElement("p");
+    // let textoCambios = document.createTextNode("Cambios: ");
+    // nuevoParrafo1.appendChild(textoCambios);
+    // let formularios1 = document.getElementById('button2');
+    // formularios1.insertBefore(nuevoParrafo1, formularios1.querySelector("label"));
+    var miP=document.querySelector('p:nth-child(6)');
+    var nuevoParrafo2=document.createElement('p');
+    var formularios2=document.createTextNode('Cambios: ');
+    nuevoParrafo2.setAttribute("id", "cambios");
+    nuevoParrafo2.appendChild(formularios2);
+    miP.appendChild(nuevoParrafo2);
+         
+
+    document.querySelector('input[name=hm]:nth-child(2)').addEventListener('blur', (event)=>{
+      cambios++;
+      document.getElementById('cambios').textContent= 'Cambios: ' + cambios; 
+
+    })
+
+    document.querySelector('input[name=hm').addEventListener('blur', (event)=>{
+      cambios++;
+      document.getElementById('cambios').textContent= 'Cambios: ' + cambios; 
+
+    })
+
+    document.querySelector('input[type=checkbox]').addEventListener('change', (event)=>{
+      cambios++;
+      document.getElementById('cambios').textContent= 'Cambios: ' + cambios; 
+    })
+
+    document.querySelector('input[type=checkbox]:nth-child(2)').addEventListener('change', (event)=>{
+      cambios++;
+      document.getElementById('cambios').textContent= 'Cambios: ' + cambios; 
+    })
+
+    document.querySelector('input[type=checkbox]:nth-child(3)').addEventListener('change', (event)=>{
+      cambios++;
+      document.getElementById('cambios').textContent= 'Cambios: ' + cambios; 
+    })
+
+
+
+    //Ejercicio 9. Cuando se introduce en el campo Comentarios la letra “w”, 
+    // se muestra una alerta indicando que ha introducido dicha letra. No hará 
+    // nada si se introducen otros caracteres.
+
+  let ape2 = document.querySelector('p > textarea');
+  let espe2 = 'w';
+  
+  ape2.addEventListener('input',(event)=>{
+    
+    console.log(ape2.value.includes(espe2));
+    if((ape2.value).match('w') ){
+    alert('Has introducido una W');
+}});
+
+//Ejercicio 10. Cuando selecciona un texto en el apartado de Comentarios 
+//muestra una alerta con el texto seleccionado.
+
+document.querySelector('p > textarea').addEventListener('select', (event)=>{
+  if (window.getSelection){
+       alert(selection());
+    }
+  
+})
+function selection(){
+if (document.getSelection)
+       return document.getSelection();
+}
+
+//Ejercicio 11. Cuando hagas click en el botón "Borrar", muestra un 
+// mensaje advirtiendo al usuario de que va a borrar todo. Pregunta si 
+// está seguro, en caso afirmativo resetea o limpia todos los campos, 
+// en caso contrario no limpies el contenido de los campos.
+document.getElementById('button2').addEventListener('click', (event)=>{
+  let valor=confirm('Se borrara la pagina');
+   if(valor){
+    location. reload();
+   }
+})
+
+//ejercicio 12. Cuando hagas click en el botón "Enviar", comprueba si 
+// ha completado todos los campos de texto. En el caso de que falten campos 
+// de texto por completar muestra una alerta que indique que no se puede 
+// enviar. En el caso de estar completos deshabilita el botón “Borrar”.
+document.querySelector('#button1').addEventListener('click', function camposCompletados(){
+    let nombre = document.querySelector('p > input').value.length;
+    let apellido = document.querySelector('p:nth-child(2) > input').value.length;
+    let nacionalidad = document.querySelector('select').value = document.querySelector('select').options[0];
+    let nacionalidad2 = document.querySelector('select').value = document.querySelector('select').options[seleccion.selectedIndex];
+    let nacimiento = document.querySelector("input[name=nacido]").value = ' ';
+    let sexoHombre = document.querySelector('input[name=hm]').checked;
+    let sexoMujer = document.querySelector('input[name=hm]:nth-child(2)').checked;
+    let deporte1 = document.querySelector('input[type=checkbox]:nth-child(1)').checked;
+    let deporte2 = document.querySelector('input[type=checkbox]:nth-child(2)').checked;
+    let deporte3 = document.querySelector('input[type=checkbox]:nth-child(3)').checked;
+    let comen = document.querySelector('p > textarea').value.length;
+    let genero;
+    let accion;
+    
+    if(sexoHombre.checked == false && sexoMujer.checked == false){
+        genero = false;
+    } else {
+        genero = true;
+    }
+
+    if (deporte1.checked == false && deporte2.checked == false && deporte3.checked){
+        accion = false;
+    } else {
+        accion = true;
+    }
+
+    if(nombre != 0 && apellido != 0 && nacionalidad != nacionalidad2 && nacimiento.length != 0 && genero == true && accion == true && comen != 0){
+        alert('pepe');
+    } else {
+        alert('Rellena los formularios para continuar');
+    }
+});
+
+
+/* Ejercicio 13. Cuando hagas click, doble click, triple click, etc… en el botón 
+“Click me”, crea un input de texto mostrando en él, el número de click que ha 
+realizado sobre el botón “Click me”. Coloca el input debajo de los botones.
+*/
+let nuevoInput= document.createElement("label");
+let inpu1= document.createElement("input");
+
+let texto1 = document.createTextNode("Clicks");
+nuevoInput.appendChild(texto1);
+
+inpu1.setAttribute("id", "Clicks");
+inpu1.setAttribute("type", "text");
+
+
+nuevoInput.appendChild(inpu1);
+nuevoInput.appendChild(document.createElement("br"));
+
+let form1 = document.getElementById('button2');
+form1.insertBefore(nuevoInput, form1.querySelector("label"));
+
+let input= document.getElementById("button3");
+input.setAttribute("onclick", "CONTADOR(event)");
+
+function CONTADOR(event) {
+  var x = event.detail;
+  if (x>0){
+    document.getElementById("Clicks").value = x;
+  }
+ 
+
+}
+
+//Ejercicio 14 Cuando hagas click en cualquier lugar del documento, 
+//se mostrará una alerta con el nombre del elemento que has clicado (utiliza event.target).
+
+document.addEventListener('click', (event) => { 
+  var x= event.detail;
+      if (x==2){
+	alert(event.target.innerHTML + event.target.nodeName);
+      }
+}); 
+
+
+/* Ejercicio 15 Pon un escuchador al BODY para que, al mover el ratón en cualquier punto de la 
+ventana del navegador, se muestre (añade un DIV o un P al HTML) la posición del puntero respecto 
+de la página (.screenX / .screenY). Coloca la información al final de la página, debajo de los 
+botones o debajo del input creado para la tarea 13.
+*/
+
+let inpu= document.createElement("input");
+
+let texto = document.createTextNode("Coordenadas");
+nuevoInput.appendChild(texto);
+
+inpu.setAttribute("id", "coordenadas");
+inpu.setAttribute("type", "text");
+
+
+nuevoInput.appendChild(inpu);
+nuevoInput.appendChild(document.createElement("br"));
+
+let form = document.forms[0];
+form.appendChild(nuevoInput, form.querySelector("label"));
+
+window.addEventListener('mousemove', (event)=>{
+  document.getElementById("coordenadas").value = (event.screenX + '/' + event.screenY);
+})
+
+  </script>
+</form>

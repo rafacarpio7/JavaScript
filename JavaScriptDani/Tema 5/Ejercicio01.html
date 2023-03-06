@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+   
+    <button id="open">Abrir</button>
+    <button id="escrib">Escribir</button>
+    <button id="move">Mover</button>
+    <button id="clos">Cerrar</button>
+
+   
+</body>
+<script>
+     
+     var win;
+
+        document.getElementById('open').addEventListener('click', (event) => 
+    {
+            win = window.open('', 'anotherWindow', 'width=500, height=200', 'screenX=100', 'screenY=200');
+            win.name="Ventana";
+            win.focus();
+    });
+
+        document.getElementById('escrib').addEventListener("click",(event) => 
+    {
+            win = window.open('', 'Ventana', 'width=500, height=200','screenX=100', 'screenY=200');
+            win.focus();
+            win.document.write('<h1>Hola</h1>');
+    });
+
+        document.getElementById('move').addEventListener("click",(event) => 
+    { 
+            win = window.open('', 'Ventana', 'width=500, height=200','screenX=100', 'screenY=200');
+            win.window.moveBy(300,100);
+            win.focus();
+        
+    });
+
+
+    document.getElementById('clos').addEventListener("click",(event) => 
+    { 
+            win.close();
+            win.focus();
+    });
+
+    
+
+   
+</script>
+</html>

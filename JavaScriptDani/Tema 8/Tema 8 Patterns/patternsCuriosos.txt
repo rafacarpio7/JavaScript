@@ -1,0 +1,5 @@
+Contraseña almenos un numero, una letra mayuscula, una miniscula y minimo 8 caracteres:
+pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" 
+
+Correo con tres cadenas separadas por un @ y un punto:
+pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$" 

@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        form{
+            margin: auto;
+            margin-top: 200px;
+            background-color: aquamarine;
+            height: 200px;
+            width: 200px;
+            border: 5px solid aqua;
+            border-radius: 10px;
+        }
+    </style>
+</head>
+<body>
+
+    <form id="FormularioLogin">
+        Correo Electrónico:
+        <input type="mail" id="mail"required>
+        <br>
+        Contraseña:
+        <input type="password" id="password1" minlength="8" required>
+        <br>
+        Mostrar contraseña 
+        <input type="checkbox" id="ver">
+        <input type="submit" name='btnEnviar' value="Enviar"> 
+    </form>
+
+
+    <script>
+
+    //Función para mostrar la contraseña
+        function enseñarContraseña(){
+          
+        let password1=document.getElementById("password1");
+        let check=document.getElementById("ver");
+
+        if(check.checked==true) 
+        {
+            password1.type = "text";
+            
+        }
+        else 
+            {
+            password1.type = "password";
+            }
+        }
+
+    //la ejecutamos
+        document.getElementById("ver").addEventListener('click', ()=>{
+            enseñarContraseña();
+        })
+//-----------------------------------------------------------------------------------   -   -   -   -   -   -   --  -   --  -   -   -   --
+
+        //recogida de datos
+        //BUILDER
+        function builder (){
+            let sentencia = 'users?';
+            let email = document.getElementById('mail').value;
+            let passwd = document.getElementById('password1').value;
+            
+            if (email != ''){
+                sentencia += 'email=' + email;
+            } 
+            if (passwd != ''){
+                sentencia += '&pass=' + passwd ;
+            }
+
+            return sentencia;
+        }
+  //............... .   ..  .   .   .   .   ..  .   ..  .   .       ..  ..  .       .   ..      .   .   .       .   ..  .   .   ..  .       .   .     
+
+    const SERVER = 'http://localhost:3000/';
+let emaildb;
+let contraseñadb;
+var win;
+const tbody = document.querySelector('tbody');
+window.addEventListener('load', function() {
+            document.getElementById('FormularioLogin').addEventListener('submit', (event)=> {
+                event.preventDefault();
+                let sentencia = builder();
+               console.log(sentencia);
+                
+                    getPosts(sentencia)
+                    .then(function(posts) {
+                        array=posts;
+
+                      
+                    })
+                    .catch(function(error){
+                        console.error(error)
+                    })
+                
+            })
+        })
+
+    function getPosts(sentencia) {
+            return new Promise(function(resolve, reject){
+                let peticion = new XMLHttpRequest()
+                peticion.open('GET', SERVER +  sentencia)
+                peticion.send()
+                peticion.addEventListener('load', () => {
+                    if(peticion.status === 200){
+                        let usuarios = JSON.parse(peticion.responseText)
+                        console.log(usuarios);
+                        if (usuarios.length > 0){   //si nos devuelve un array de longitud mayor a 0 significa que encontró un usuario en la bd
+                            console.log("acceso ");
+                            let fecha=new Date()
+                            //abrimos y pintamos la pantalla
+                            win = window.open('', 'anotherWindow', 'width=500, height=200', 'screenX=100', 'screenY=200');
+                            win.name="Ventana";
+                            win.focus();
+                            win.document.write('<h1>Bienvenida o bienvenido</h1><br>Fecha actual: ' + fecha.toLocaleString());
+
+                       //creamos el array que vamos a introducir en la bd
+                            let arrayProducts = {"email": document.getElementById('mail').value,
+                                                "date": fecha.toLocaleString(),
+                                                };
+
+                        //insertamos en la bd
+                            const peticion=new XMLHttpRequest();
+                            peticion.open('POST','http://localhost:3000/access');
+
+                            peticion.setRequestHeader('Content-Type', 'application/json');
+
+                            peticion.onload = () => {
+                                const data = JSON.parse(peticion.response);
+                                console.log(data);
+                            };
+                            peticion.send(JSON.stringify(arrayProducts)); 
+                       
+                            
+                        }else {
+                            console.log("no acceso");
+                            alert("Usuario y/o contraseña no válidos");
+                        }
+                    }else {
+                        reject('Error' + this.status + ' (' + this.statusText + ') en la petición')
+                    }
+                })
+                peticion.addEventListener('error', () => reject('Error en la peticion HTTP'))
+            })
+        }
+   
+    </script>
+</body>
+</html>

@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <title>Form validation: Task 1</title>
+  <style>
+    body {
+      background-color: #fff;
+      color: #333;
+      font: 1em / 1.4 Helvetica Neue, Helvetica, Arial, sans-serif;
+      padding: 1em;
+      margin: 0;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    input:invalid {
+      border: 2px dashed red;
+
+    }
+
+    input:valid {
+      border: 2px dashed green;
+
+    }
+
+    #imgPreview {
+      width: 100px;
+      height: 100px;
+    }
+  </style>
+</head>
+
+<body>
+  <!-- 3. Agrega al HTML facilitado (Actividad_UT8.html) las siguientes
+    funcionalidades:
+    3.1. Todos los campos de entrada deben completarse obligatoriamente
+    antes de que se pueda enviar el formulario.
+    3.2. Cambia el tipo de los campos "Dirección de correo electrónico" y
+    "Número de teléfono" para que el navegador aplique alguna validación
+    más adecuada para los datos que se solicitan.
+    3.3. Asigna al campo "Nombre de usuario" una longitud requerida de entre
+    3 y 20 caracteres, al campo "Número de teléfono" una longitud máxima
+    de 15 caracteres y al campo "Comentario" una longitud máxima de 200
+    caracteres.
+    3.4. Intenta enviar el formulario (click en el botón correspondiente): debe
+    rechazar el envío hasta que se cumplan las restricciones anteriores y
+    mostrar los mensajes de error adecuados. Si quieres, puedes agregar un
+    CSS simple para mostrar cuándo un campo de formulario es válido o no. -->
+  <form>
+    <h2>Enter your support query</h2>
+    <ul>
+      <li>
+        <label for="uname">User name:</label>
+        <input type="text" name="uname" id="uname" minlength="3" maxlength="20" required>
+      </li>
+      <li>
+        <label for="email">Email address:</label>
+        <input type="email" name="email" id="email" required>
+      </li>
+      <li>
+        <label for="phone">Phone number:</label>
+        <input type="text" name="phone" id="phone" minlength="9" maxlength="15" required>
+      </li>
+      <li>
+        <label for="comment">Comment:</label>
+        <textarea name="comment" id="comment" maxlength="200" required>
+          </textarea>
+      </li>
+      <li>
+        <button>Submit comment</button>
+      </li>
+    </ul>
+  </form>
+</body>
+
+</html>

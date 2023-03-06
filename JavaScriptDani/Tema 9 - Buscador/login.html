@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        #FormularioProducto{
+            width:  49%;
+            float: left;
+            background-color: rgb(162, 184, 238);
+            border: solid rgb(107, 148, 252);
+        }
+
+        #FormularioCategoria{
+            width: 49%;
+            float: right;
+            background-color: rgb(162, 238, 162);
+            border: solid rgb(113, 234, 113);
+        }
+
+        table{
+            margin-top: 10px;
+        }
+        
+        div{
+            width:100%;
+            padding: 5px;
+            margin: auto;
+        }
+        
+
+    </style>
+</head>
+<body id="body">
+  <div id="FormularioProducto">
+    <form >
+        <fieldset>
+            <legend>Búsqueda de productos</legend>
+            <p>Nombre: </p>
+            <input type="text" name="selectorNombre" id="selectorNombre" >
+            <p>Precio: </p>
+            Precio Mínimo: 
+            <input type="number" name="priceMin" id="priceMin" >
+            Precio Máximo: 
+            <input type="number" name="priceMax" id="priceMax" >
+            <p>Categoria: </p>
+            <Select name="selectorCategoria" id="selectorCategoria">
+                <option id="selectorCategoria" name="selectorCategoria" value="1">Categoria 1</option>
+                <option id="selectorCategoria" name="selectorCategoria" value="2">Categoria 2</option>
+            </Select> 
+            <br>
+            <br>
+            <input type="submit" name="btnEnviar" value="Enviar">
+        </fieldset>
+    </form>
+    <table border="1" cellspacing="0" cellpadding="0" width="200px" align="center" >
+        <thead>
+        <tr><th>Id</th><th>Name</th><th>Price</th><th>Description</th><th>categoryId</th></tr>
+        </thead>
+        <tbody></tbody>
+    </table>
+    <p>Total de posts mostrados: <span id="num-posts"></span></p>
+  </div>
+  <div id="FormularioCategoria">
+    <form >
+        <fieldset>
+            <legend>Introducción de Categorias</legend>
+
+            <p>Nombre: </p>
+            <input type="text" name="nameCategoria" id="categoriaNombre" >
+
+            <p>Descripción: </p>
+            <input type="text" name="descriptionCategoria" id="categoriaDescription" >
+            
+            <br>
+            <br>
+            <input type="submit" name="btnEnviarCategoria" value="Enviar">
+        </fieldset>
+    </form>
+
+    <table border="1" cellspacing="0" cellpadding="0" width="200px" align="center">
+        <thead>
+        <tr><th>Id</th><th>Name</th><th>Description</th></tr>
+       
+        <tbody id="categorias"></tbody>
+    </thead>
+        </table>
+    <p>Total de posts mostrados: <span id="num-categories"></span></p>
+
+</div>
+    <script>
+
+//------------------------------------------------FORMULARIO PRODUCTO---------------------------------------------
+// BUILDER:
+        function builder (){
+            let sentencia = 'products?';
+            let nombreP = document.getElementById('selectorNombre').value;
+            let precioMin = document.getElementById('priceMin').value;
+            let precioMax = document.getElementById('priceMax').value;
+            let categoria = document.getElementById('selectorCategoria').value;
+            if (nombreP != ''){
+                sentencia += 'name=' + nombreP;
+            } 
+            if (precioMin != ''){
+                sentencia += '&price_gte=' + precioMin ;
+            }
+            if ( precioMax != ''){
+                sentencia +=  '&price_lte=' + precioMax;
+            }
+             if (categoria != ''){
+                sentencia += '&categoryId=' + categoria;
+            }
+
+            return sentencia;
+        }
+
+//PROMESA-       
+        const SERVER = 'http://localhost:3000/';
+        const tbody = document.querySelector('tbody');
+
+        window.addEventListener('load', function() {
+            document.getElementById('FormularioProducto').addEventListener('submit', (event)=> {
+                event.preventDefault();
+                let sentencia = builder();
+               // console.log(sentencia);
+                
+                    getPosts(sentencia)
+                    .then(function(posts) {
+                        tbody.innerHTML =''
+                        posts.forEach(post => {
+                            const newPost = document.createElement('tr')
+                            newPost.innerHTML = `
+                            <td>${post.id}</td>
+                            <td>${post.name}</td>
+                            <td>${post.price}</td>
+                            <td>${post.description}</td>
+                            <td>${post.categoryId}</td>                  
+                            `
+                            tbody.appendChild(newPost)
+                        })
+                        document.getElementById('num-posts').textContent = posts.length
+                    })
+                    .catch(function(error){
+                        console.error(error)
+                    })
+                
+            })
+        })
+
+        function getPosts(sentencia) {
+            return new Promise(function(resolve, reject){
+                let peticion = new XMLHttpRequest()
+                peticion.open('GET', SERVER +  sentencia)
+                peticion.send()
+                peticion.addEventListener('load', () => {
+                    if(peticion.status === 200){
+                        resolve(JSON.parse(peticion.responseText))
+                    }else {
+                        reject('Error' + this.status + ' (' + this.statusText + ') en la petición')
+                    }
+                })
+                peticion.addEventListener('error', () => reject('Error en la peticion HTTP'))
+            })
+        }
+
+        //------------------------------------------------FORMULARIO CATEGORIA---------------------------------------------
+// BUILDER:
+function builderCat (){
+            let sentencia = 'categories?';
+            let nombreP = document.getElementById('categoriaNombre').value;
+            let precioMin = document.getElementById('categoriaDescription').value;
+            
+            if (nombreP != ''){
+                sentencia += 'name=' + nombreP;
+            } 
+            if (precioMin != ''){
+                sentencia += '&description=' + precioMin ;
+            }
+            
+
+            return sentencia;
+        }
+
+//PROMESA-       
+        const SERVER2 = 'http://localhost:3000/';
+        const tbody2 = document.querySelector("tbody[id=categorias]");
+
+        window.addEventListener('load', function() {
+            document.getElementById('FormularioCategoria').addEventListener('submit', (event)=> {
+                event.preventDefault();
+                let sentencia = builderCat();
+               // console.log(sentencia);
+                
+               getCat(sentencia)
+                    .then(function(posts) {
+                        tbody2.innerHTML =''
+                        posts.forEach(post => {
+                            const newPost = document.createElement('tr')
+                            newPost.innerHTML = `
+                            <td>${post.id}</td>
+                            <td>${post.name}</td>
+                            
+                            <td>${post.description}</td>
+                                        
+                            `
+                            tbody2.appendChild(newPost)
+                        })
+                        document.getElementById('num-categories').textContent = posts.length
+                    })
+                    .catch(function(error){
+                        console.error(error)
+                    })
+                
+            })
+        })
+
+        function getCat(sentencia) {
+            return new Promise(function(resolve, reject){
+                let peticion = new XMLHttpRequest()
+                peticion.open('GET', SERVER2 +  sentencia)
+                peticion.send()
+                peticion.addEventListener('load', () => {
+                    if(peticion.status === 200){
+                        resolve(JSON.parse(peticion.responseText))
+                    }else {
+                        reject('Error' + this.status + ' (' + this.statusText + ') en la petición')
+                    }
+                })
+                peticion.addEventListener('error', () => reject('Error en la peticion HTTP'))
+            })
+        }
+
+
+    
+    </script>
+       
+</body>
+</html>

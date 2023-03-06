@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <title>Form validation: Task 1</title>
+  <style>
+    body {
+      background-color: #fff;
+      color: #333;
+      font: 1em / 1.4 Helvetica Neue, Helvetica, Arial, sans-serif;
+      padding: 1em;
+      margin: 0;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    span {
+      color: red;
+    }
+
+    input:invalid {
+      border: 2px dashed red;
+    }
+
+    input:valid {
+      border: 2px dashed green;
+    }
+
+    #imgPreview {
+      width: 100px;
+      height: 100px;
+    }
+  </style>
+</head>
+
+<body>
+  <!-- Primera versión del ejercicio 2.
+1.	Cambia los siguientes campos para que todos sean de tipo texto; quita los atributos (maxlength, max, min, etc.) 
+que pusiste y añade lo correspondiente para que solo tengan patrones:
+    a.	Nombre: Introducir entre 3 y 20 letras.
+    b.	Apellidos: Introducir entre 4 y 40 letras.
+    c.	Usuario: 5 letras y a continuación 2 dos números. Ejemplo: mario01
+    d.	Correo: exactamente los 7 caracteres de Usuario seguidos de @gmail.com (solo válidos para usuarios de gmail).  
+    Ejemplo valido: mario01@gmail.com. Este campo será autocompletado a partir de la información de Usuario. Aunque 
+    el usuario podrá modificarlo.
+    e.	Número de teléfono: valor numérico de 9 cifras obligatoriamente debe comenzar por 6, 7, 8 o 9.
+ -->
+
+  <h2>Ejercicio 2</h2>
+  <p>Crear cuenta en red social</p>
+  <form novalidate>
+    <label for="nombre">Nombre</label>
+    <input name="nombre" id="nombre" type="text" pattern="[a-zA-Z]{3,20}" required>
+
+    <br>
+    <label for="apellido">Apellido</label>
+    <input name="apellido" id="apellido" type="text" minlength="4" maxlength="40" pattern="[a-zA-Z]{4,40}" required>
+
+    <br>
+    <label for="usuario">Usuario</label>
+    <input name="usuario" id="usuario" type="text" minlength="7" pattern="[a-zA-Z0-9]{7,40}" required>
+
+    <br>
+    <label for="correo">Correo</label>
+    <input name="correo" id="correo" type="email"  required>
+
+    <br>
+    <label for="telefono">Telefono</label>
+    <input name="telefono" id="telefono" type="text" pattern="[6-9]{1}[0-9]{8}" required>
+
+    <br>
+    <label for="fecha">Fecha de Nacimiento</label>
+    <input name="fecha" id="fecha" type="date"  required>
+
+    <div class="fechaMayor"></div>
+
+    <label for="checkbox">Marca tus intereses(mínimo2)</label><br>
+    <input type="checkbox" name="checkbox">
+    <label for="cbox1">Ciencia</label>
+    <input type="checkbox" name="checkbox">
+    <label for="cbox2">Tecnología</label>
+    <input type="checkbox" name="checkbox">
+    <label for="cbox3">Matemáticas</label>
+    <input type="checkbox" name="checkbox">
+    <label for="cbox4">Deportes</label>
+    <input type="checkbox" name="checkbox">
+    <label for="cbox5" name="checkbox">Cine</label>
+
+    <BR>
+    <label for="fotousuario">Foto de perfil</label>
+    <input type="file" name="fotousuario" accept="image/*" onchange="previewImage(event, '#imgPreview')">
+    <BR>
+    <span class="error"></span><br>
+    <button id="btnValidator"> Enviar</button>
+    <br>
+    <BR>
+    <img id="imgPreview">
+
+
+  </form>
+
+  <script>
+    'use strict'
+    //RECOGEMOS EL USUARIO PARA USARLO EN EL CORREO Y CREAR EL PATTERN CORRESPONDIENTE:
+    document.querySelector('input[name="usuario"]').addEventListener('blur', () => {
+          let usuarioPersona = document.querySelector('input[name="usuario"]').value;
+          let usarioCorreo = usuarioPersona + "@gmail.com";
+            //creamos el correo por defecto
+          let campoCorreo = document.querySelector('input[name="correo"]').value = usarioCorreo;
+          //introducimos el pattern por js para que se adapte al correo generado para poder controlarlo por validity
+          let prueba = document.getElementById('correo');
+          prueba.setAttribute("pattern", usarioCorreo );
+        //NOTA**: para comprobar que los patterns se introducen correctamente, comprobarlo por consola
+        //en el cliente
+    })
+
+
+    //PREVIUALIZACIÓN DE LA IMAGEN
+    //SI ELIMINAMOS EL img DEL STYLE LA IMAGEN SE VERÁ COMO SU ORIGINAL
+    function previewImage(event, querySelector) {
+          //Recuperamos el input que desencadenó la acción
+          const input = event.target;
+          //Recuperamos la etiqueta img donde cargaremos la imagen
+          var imgPreview = document.querySelector(querySelector);
+          // Verificamos si existe una imagen seleccionada
+          if (!input.files.length) return
+          //Recuperamos el archivo subido
+          var file = input.files[0];
+          //Creamos la url
+          var objectURL = URL.createObjectURL(file);
+          //Modificamos el atributo src de la etiqueta img
+          imgPreview.src = objectURL;
+    }
+
+    //--------------------------------------------------------------------------
+
+    //CONTROL DE FECHA EVITADO QUE USEN FECHAS POSTERIORES A PERSONAS QUE TIENEN MENOS DE 18 AÑOS y MÁS DE 99
+    //recogemos la fecha del dia de hoy
+    var ago = new Date()
+    //restamos 18 años para saber quien es a dia de hoy ya mayor de edad
+    ago.setFullYear(ago.getFullYear()-18);
+    //convertimos la fecha en un String y eliminamos el texto que va detras de la T ya que no lo vamos a usar
+    var fechaFinal = ago.toJSON().split('T')[0];
+    //restamos 81 años que es el numero de años que nos faltan para la máxima edad de 99 años
+    ago.setFullYear(ago.getFullYear()-81);
+    //convertimos la fecha en un String y eliminamos el texto que va detras de la T ya que no lo vamos a usar
+    var fechaInicial = ago.toJSON().split('T')[0];
+   //Los introducimos como valores máximos y minimos del input para poder controlarlos con validity
+    document.getElementsByName("fecha")[0].setAttribute('max', fechaFinal);
+    document.getElementsByName("fecha")[0].setAttribute('min', fechaInicial);
+    //--------------------------------------------------------------------------
+
+    //------------------------------------------------------------------------------------------------
+
+    //VALIDADOR DEL FORMULARIO:
+    //Declaración de constantes
+    const form = document.getElementsByTagName('form')[0];
+    const botón = document.querySelector('button[id="btnValidator"]')
+    const ErrorGenerico = document.querySelector('span.error');
+
+    const nombre = document.querySelector('input[name="nombre"]');
+
+    const apellido = document.querySelector('input[name="apellido"]');
+
+    const usuario = document.querySelector('input[name="usuario"]');
+
+    const correo = document.querySelector('input[name="correo"]');
+
+    const telefono = document.querySelector('input[name="telefono"]')
+
+    const nacimiento = document.querySelector('input[name="fecha"]');
+
+
+    //listener que observa el formulario para saber cuando está bien el campo
+    nombre.addEventListener('input', (event) => {
+      if (nombre.validity.valid) {
+        ErrorGenerico.innerHTML = '';
+        ErrorGenerico.className = "error";
+      }
+    })
+
+    apellido.addEventListener('input', (event) => {
+      if (apellido.validity.valid) {
+        ErrorGenerico.innerHTML = '';
+        ErrorGenerico.className = "error";
+      }
+    })
+
+    usuario.addEventListener('input', (event) => {
+      if (usuario.validity.valid) {
+        ErrorGenerico.innerHTML = '';
+        ErrorGenerico.className = "error";
+      }
+    })
+
+    correo.addEventListener('input', (event)=>{
+      if (correo.validity.valid){
+        ErrorGenerico.innerHTML = '';
+        ErrorGenerico.className = "error";
+      }
+    })
+
+    telefono.addEventListener('input', (event) => {
+      if (telefono.validity.valid) {
+        ErrorGenerico.innerHTML = '';
+        ErrorGenerico.className = "error";
+      }
+    })
+
+    nacimiento.addEventListener('input', (event) => {
+      if (nacimiento.validity.valid) {
+        ErrorGenerico.innerHTML = '';
+        ErrorGenerico.className = "error";
+      }
+    })
+    //----------------------------------------------
+
+//Listener que comprueba en orden todos los campos del formulario
+    botón.addEventListener('click', (event) => {
+      if (!nombre.checkValidity()) {
+        showErrorNombre();
+        event.preventDefault();
+      } else if (!apellido.checkValidity()) {
+        showErrorApellido();
+        event.preventDefault();
+      } else if (!usuario.checkValidity()) {
+        showErrorUsusario();
+        event.preventDefault();
+        }else if (!correo.checkValidity()){
+          showErrorCorreo();
+          event.preventDefault();
+      } else if (!telefono.checkValidity()) {
+        showErrorTelefono();
+        event.preventDefault();
+      } else if (!nacimiento.checkValidity()) {
+        showErrorNacimiento();
+        event.preventDefault();
+      }
+    });
+      //----------------------------------------------
+
+  //Funciones para mostrar los mensajes de error en el sitio indicado con la etiqueta SPAN guardada en 
+  //la variable "ErrorGenerico"
+    //todo ok
+    function showErrorNombre() {
+      if (nombre.validity.valueMissing) {
+        ErrorGenerico.innerHTML = "<b>NOMBRE</b> campo obligatorio";
+        ErrorGenerico.className = "Error en el campo NOMBRE valueMissing";
+
+      } else if (nombre.validity.patternMismatch) {
+        if (nombre.value.length < 3) {
+          ErrorGenerico.innerHTML = "<b>NOMBRE</b> debe tener entre 3 y 20 caracteres";
+          ErrorGenerico.className = "Error en el campo NOMBRE rage";
+        } else {
+          ErrorGenerico.innerHTML = "<b>NOMBRE</b> no puede contener caracteres especiales ni números";
+          ErrorGenerico.className = "Error en el campo NOMBRE mismatch";
+        }
+      }
+    }
+
+    //todo ok
+    function showErrorApellido() {
+      if (apellido.validity.valueMissing) {
+        ErrorGenerico.innerHTML = "<b>APELLIDO</b> campo obligatorio";
+
+      } else if (apellido.validity.patternMismatch) {
+        if (apellido.value.length < 4 || apellido.value.length > 20) {
+          ErrorGenerico.innerHTML = "<b>APELLIDO</b> debe tener entre 4 y 40 caracteres";
+        } else {
+          ErrorGenerico.innerHTML = "<b>APELLIDO</b> no puede contener caracteres especiales ni números";
+        }
+        ErrorGenerico.className = "Error en el campo APELLIDO";
+      }
+    }
+      //todo ok
+      function showErrorUsusario() {
+        if (usuario.validity.valueMissing) {
+          ErrorGenerico.innerHTML = "<b>USUARIO</b> campo obligatorio";
+          ErrorGenerico.className = "Error en el campo USUARIO missing";
+        } else if (!usuario.value.length < 7) {
+          ErrorGenerico.innerHTML = "<b>USUARIO</b> debe tener al menos 7 caracteres";
+          ErrorGenerico.className = "Error en el campo USUARIO short";
+        }
+      }
+      //todo ok
+      function showErrorCorreo() {
+        if (correo.validity.valueMissing) {
+          ErrorGenerico.innerHTML = "<b>CORREO</b> campo obligatorio";
+          ErrorGenerico.className = "Error en el campo CORREO missing";
+
+        }else if (correo.validity.typeMismatch){
+          ErrorGenerico.innerHTML = "<b>CORREO</b> introducido no es de tipo email";
+          ErrorGenerico.className = "Error en el campo CORREO MISMATCH";
+        }else if (correo.value != (usuario.value + "@gmail.com")){
+          ErrorGenerico.innerHTML = "<b>CORREO</b> debe ser: (" + usuario.value + "@gmail.com)";
+          ErrorGenerico.className = "Error en el campo CORREO MISMATCH";
+        }
+      }
+
+      //todo ok
+      function showErrorTelefono() {
+        if (telefono.validity.valueMissing) {
+          ErrorGenerico.innerHTML = "<b>TELEFONO</b> campo obligatorio";
+          ErrorGenerico.className = "Error en el campo telefono missing";
+        } else if (telefono.validity.patternMismatch) {
+          ErrorGenerico.innerHTML = "<b>TELEFONO</b> debe comenzar por 6, 7, 8, O 9 y tener una extensión fija de 9 cifras <br> Has introducido: " + telefono.value.length + " cifras en total";
+          ErrorGenerico.className = "Error en el campo telefono short";
+        }
+      }
+
+      //todo ok
+      function showErrorNacimiento() {
+        if (nacimiento.validity.valueMissing) {
+          ErrorGenerico.innerHTML = "<b>FECHA DE NACIMIENTO</b> campo obligatorio";
+          ErrorGenerico.className = "Error en el campo FECHA missing";
+        } else if (nacimiento.validity.rangeOverflow || nacimiento.validity.rangeUnderflow) {
+          ErrorGenerico.innerHTML = "<b>FECHA DE NACIMIENTO</b> la red social no es apta para menores de 18 años o mayores de 99 años";
+       
+          ErrorGenerico.className = "Error en el campo FECHA short";
+        }
+      }
+  </script>
+</body>
+</html>

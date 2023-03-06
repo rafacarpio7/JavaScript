@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+   
+    <button id="open">Abrir</button>
+
+
+</body>
+<script>
+     
+     var win;
+
+        document.getElementById('open').addEventListener('click', (event) => 
+    {
+        win = window.open('./ejemplo.html', 'anotherWindow', 'width=500', 'height=200', 'screenX=100', 'screenY=200');
+        win.moveTo(100,200);
+        win.resizeTo(500,300) ;
+        win.focus();
+        win.document.write('<button id="clos">Cerrar</button>');
+        win.setTimeout(() => {win.confirm('Bienvenido');
+            
+        }, 2000);
+
+                win.document.getElementById('clos').addEventListener("click",(event) => 
+            { 
+                win.window.close();
+                win.focus();
+            });
+            
+    });
+
+
+</script>
+</html>

@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<!--4. Modifica las clases Productos y Televisores para que el método que muestra los datos 
+    del producto se llame de una manera más adecuada.-->
+<head>
+    <meta charset="UTF-8">
+    <title>Ejercicio 4</title>
+</head>
+
+<body>
+    <script>
+       
+        class Productos {
+            constructor(nombre, categoria, unidades, precio) {
+                this.nombre = nombre;
+                this.categoria = categoria;
+                this.unidades = unidades;
+                this.precio = precio;
+            }
+
+            importe() {
+                let importe = this.unidades * this.precio;
+                return (importe);
+            }
+
+            toString() {
+                return this.nombre + ' (' + this.categoria + '): Unidades ' + this.unidades
+                    + ' x ' + this.precio + '€ = ' + this.importe() + '€';
+
+            }
+
+        }
+
+        class Televisores extends Productos {
+            constructor(nombre, categoria, unidades, precio, tamaño) {
+                super(nombre, categoria, unidades, precio);
+                this.tamaño = tamaño;
+            }
+
+            toString() {
+                return this.tamaño + ' ' + this.nombre;
+            }
+        }
+
+
+        let tvsamsung = new Productos('tvSamsung', 'televisores', 4, 345.95);
+        //tvsamsung.importe();
+        document.write(tvsamsung.toString());
+        
+    </script>
+</body>
+
+</html>
