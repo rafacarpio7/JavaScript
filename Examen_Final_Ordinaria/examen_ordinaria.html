@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cl@ve Pin</title>
+</head>
+<body>
+<form id="generar" >
+    <h1>Genera tu cl@ve pin</h1>
+    * Introduzca su DNI/NIE
+    <input type="text" name="dniGenerar" id="dniGenerar" pattern="[0-9]{8}[aA-zZ]{1}" required>
+    <br>
+    <input type="submit" id="btnGenerar" value="Continuar">
+</form>
+
+<form id="acceder">
+    <h1>Accede con tu cl@ve pin</h1>
+    N.I.F : <br>
+    <input type="text" name="dniLogear" id="dniLogear" pattern="[0-9]{8}[aA-zZ]{1}" required><br>
+    * PIN : <br>
+    <input type="text" name="clavePin" id="clavePin" required><br>
+    <input type="submit" id="btnAcceder" value="Acceder">
+
+</form>
+
+
+<script>
+    const formGenerar = document.getElementById("generar");
+    const formAcceder = document.getElementById("acceder");
+    const dniGenerar = document.getElementById("dniGenerar");
+    const dniLogear = document.getElementById("dniLogear");
+    const pinAcceso = document.getElementById("clavePin");
+    const pinGenerado = generaClave();
+    const fechaHoy = new Date();
+    let win ;
+
+    function generaClave() {
+        let numeros = [0,1,2,3,4,5,6,7,8,9];
+        let letras = ["A","B","C","D","E","F","G","H","I","J","K","L","M","N","Ñ","O","P","Q","R","S","T","U","V","W","X","Y","Z","0","1","2","3","4","5","6","7","8","9"];
+        let pin="" ;
+
+        for (let index = 0; index < 4; index++) {
+            pin += letras[Math.floor(Math.random() * letras.length)];
+            
+        }
+        return pin;
+    }
+
+    formGenerar.addEventListener('submit',  (event)=> {
+            event.preventDefault();
+            insertarAcceso();
+            
+            win = window.open('', 'ventanaBienvenida', 'width=500, height=200', 'screenX=100', 'screenY=200');
+            win.name="Ventana";
+            win.focus();
+            win.document.write('<h1>Bienvenido o bienvenida</h1><br>DNI : '+ dniGenerar.value+ '<br> PIN :'+pinGenerado +' <br> Fecha de Generacion : ' + fechaHoy.toLocaleDateString()+','+fechaHoy.toLocaleTimeString()+ '<br>Dispone 24 horas para utilizar esta clave');
+            
+            })
+
+    
+    formAcceder.addEventListener('submit',  (event)=> {
+            event.preventDefault();
+            let compruebaLogin = false;
+        
+            getPosts().then((posts) => {
+                posts.forEach((post) => {
+                    const newPost = document.createElement('option');
+                    if (`${post.dni}` == dniLogear.value && `${post.pin}` == pinAcceso.value) {
+                        compruebaLogin = true;
+
+                        win = window.open('', 'ventanaBienvenida', 'width=500, height=200', 'screenX=100', 'screenY=200');
+                        win.name="Ventana";
+                        win.focus();
+                        win.document.write('<h1>Bienvenido o bienvenida</h1><br>DNI : '+ dniLogear.value+ '<br> PIN :'+ `${post.pin}` +' <br> Fecha de Generacion : ' +`${post.date}` +'<br> Fecha de Acceso : '+fechaHoy.toLocaleString() + '<br>Dispone de  24 horas para utilizar esta clave');
+                       
+                    
+                    let fechaPost = new Date(post.date);
+                    console.log(fechaPost);
+                    console.log(fechaHoy.toLocaleString());
+                    console.log((fechaPost-fechaHoy));
+                    }
+                    
+                })
+                })
+                .catch((error) => console.error(error))
+                // console.log(compruebaLogin);
+                // if (compruebaLogin === true) {
+                //         win = window.open('', 'ventanaBienvenida', 'width=500, height=200', 'screenX=100', 'screenY=200');
+                //         win.name="Ventana";
+                //         win.focus();
+                //         win.document.write('<h1>Bienvenido o bienvenida</h1><br>DNI : '+ dniLogear.value+ '<br> PIN : 4XQC <br> Fecha de Generacion : ' + fechaHoy.toLocaleDateString()+','+fechaHoy.toLocaleTimeString()+'<br> Fecha de Acceso : '+`${post.date}` + '<br>Dispone 24 horas para utilizar esta clave');
+                // } else {
+                //     alert("login Incorrecto");
+                    
+                // }
+            })
+
+    function insertarAcceso() {
+
+        let fechaHoy = new Date();
+
+        const peticion = new XMLHttpRequest();
+        peticion.open('POST', 'http://localhost:3000/autentificacion');
+
+        peticion.setRequestHeader('Content-Type', 'application/json');
+
+        peticion.onload = () => {
+            const data = JSON.parse(peticion.response);
+            console.log(data);
+        };
+
+        peticion.send(JSON.stringify({
+            dni: dniGenerar.value,
+            pin: pinGenerado,
+            date: fechaHoy.toLocaleString()
+        }));
+    }
+
+    function getPosts() {
+        return new Promise((resolve, reject) => {
+            const peticion = new XMLHttpRequest();
+            peticion.open('GET', 'http://localhost:3000/autentificacion');
+            peticion.send();
+            peticion.addEventListener('load', () => {
+            if (peticion.status === 200) {
+                resolve(JSON.parse(peticion.responseText));
+            } else {
+                reject("Error " + peticion.status + " (" + peticion.statusText + ") en la petición");
+            }
+            })
+            peticion.addEventListener('error', () => reject('Error en la petición HTTP'));
+        })
+    }
+
+    
+
+
+
+
+
+
+
+
+
+
+</script>
+    
+</body>
+</html>
